@@ -2,7 +2,59 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="row justify-content-center text-center">
+        <div class="col-lg-10">
+
+            <h1 class="d-xxl-inline-flex fw-bold mb-3 custom-heading">
+                Hi, I'm <span id="name" class="text-primary"></span>
+            </h1>
+
+            <h5 class="text-primary fw-semibold mb-4">
+                <span id="title"></span>
+            </h5>
+
+            <p class="accordion">
+                <strong>Back-End Developer (.NET)</strong> with over 4 years of hands-on experience in developing
+                enterprise systems and highly scalable web APIs with a solid understanding of RESTful
+                services and building secure, scalable APIs. Strong foundation in <strong>
+                    ASP.NET, .NET Framework, Web
+                    & API development, C#, ASP.NET MVC and .NET Core
+                </strong>. Familiarity with Dependency Injection (DI).
+                Proven ability to build <strong>
+                    microservices, automate processes using Apache NiFi and Hangfire, and integrate
+                    SQL Server databases, PostgreSQL and Neo4j NoSQL databases for complex data mapping
+                </strong>. Demonstrated record
+                of on-time delivery, analytical problem-solving, clean coding practices, and troubleshooting production issues.
+                Skilled in managing backend operations for high-impact projects.
+            </p>
+
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a class="btn btn-outline-primary btn-lg px-4 hero-btn"
+                   asp-controller="Home"
+                   asp-action="Contact">
+                    <i class="bi bi-envelope-fill me-2"></i>Contact
+                </a>
+
+                <a class="btn btn-outline-primary btn-lg px-4 hero-btn"
+                   asp-controller="Home"
+                   asp-action="Skills">
+                    <i class="bi bi-code-slash me-2"></i>Skills
+                </a>
+
+                <a class="btn btn-outline-primary btn-lg px-4 hero-btn"
+                   asp-controller="Home"
+                   asp-action="Projects">
+                    <i class="bi bi-kanban-fill me-2"></i>Projects
+                </a>
+
+                <a class="btn btn-outline-primary btn-lg px-4 hero-btn"
+                   asp-controller="Home"
+                   asp-action="Experience">
+                    <i class="bi bi-briefcase-fill me-2"></i>Experience
+                </a>
+            </div>
+
+        </div>
+    </div>
 </div>
