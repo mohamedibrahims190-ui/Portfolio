@@ -1,5 +1,4 @@
-﻿@model ContactFormModel
-@{
+﻿@{
     ViewData["Title"] = "Contact";
 }
 <h2>Contact Me</h2>
@@ -8,19 +7,3 @@
 {
     <div class="alert alert-success">@ViewBag.Message</div>
 }
-
-<form asp-action="Contact" method="post">
-    <div class="mb-3">
-        <label>Name</label>
-        <input asp-for="Name" class="form-control" />
-    </div>
-    <div class="mb-3">
-        <label>Email</label>
-        <input asp-for="Email" class="form-control" />
-    </div>
-    <div class="mb-3">
-        <label>Message</label>
-        <textarea asp-for="Message" class="form-control"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Send</button>
-</form>
