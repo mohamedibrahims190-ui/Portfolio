@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Portfolio.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -45,6 +46,35 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        const nameText = "\u00A0Mohamed Ibrahim"; // Leading space
+        const titleText = "Software Developer | .NET | Backend Specialist";
+        let nameIndex = 0;
+        let titleIndex = 0;
+        const speed = 50;
+
+        function typeName() {
+            if (nameIndex < nameText.length) {
+                document.getElementById("name").innerHTML += nameText.charAt(nameIndex);
+                nameIndex++;
+                setTimeout(typeName, speed);
+            } else {
+                typeTitle(); // Start typing title after name finishes
+            }
+        }
+
+        function typeTitle() {
+            if (titleIndex < titleText.length) {
+                document.getElementById("title").innerHTML += titleText.charAt(titleIndex);
+                titleIndex++;
+                setTimeout(typeTitle, speed);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", typeName);
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

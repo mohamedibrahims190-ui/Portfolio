@@ -1,31 +1,106 @@
+﻿/* Base font size */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
+/* Responsive font size */
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* Body styling */
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: repeating-linear-gradient( 270deg, #2c003e, /* deep purple */
+    #5b2a86, /* muted violet */
+    #9f47c5, /* soft magenta */
+    #2c003e /* loop back to deep purple */
+    );
+    background-size: 600% 600%;
+    animation: gradientAnimation 15s ease infinite;
+    color: white;
+    font-family: 'Arial', sans-serif; /* Merged with .custom-font */
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Gradient animation */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* Form input focus */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* Form placeholder styling */
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* Hero section */
+.hero-section {
+    min-height: 85vh;
+    background: linear-gradient(135deg, #f8f9fa, #eef2f7);
+}
+
+/* Buttons */
+.hero-btn {
+    transition: all 0.3s ease-in-out;
+}
+
+    .hero-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+/* Custom fonts and headings */
+.custom-font {
+    letter-spacing: 0.5px;
+}
+
+.custom-heading {
+    letter-spacing: 0.8px;
+    line-height: 1.2;
+}
+
+/* Typing effect */
+#typing-text::after {
+    content: "|";
+    margin-left: 5px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% {
+        opacity: 1;
+    }
+
+    25%, 75% {
+        opacity: 0;
+    }
 }
