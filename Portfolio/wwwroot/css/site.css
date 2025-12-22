@@ -150,3 +150,16 @@ body {
     font-size: 3rem; /* very large */
     line-height: 1.2;
 }
+
+.blinking-text {
+    animation: blinkColors 1s infinite;
+    font-weight: bold; /* optional */
+}
+
+@keyframes blinkColors {
+
+    100% {
+        color: green;
+    }
+}
+
