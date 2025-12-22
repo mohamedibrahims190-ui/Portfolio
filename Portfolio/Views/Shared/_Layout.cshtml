@@ -133,6 +133,22 @@
             closeCard.click();
         });
 
+            function copyEmail() {
+            const email = document.getElementById("emailText").innerText;
+            const icon = document.getElementById("copyIcon");
+
+            navigator.clipboard.writeText(email).then(() => {
+                // Change icon to tick
+                icon.classList.remove("bi-copy");
+                icon.classList.add("bi-check-circle-fill");
+
+                // Optional: revert back after 2 seconds
+                setTimeout(() => {
+                    icon.classList.remove("bi-check-circle-fill");
+                    icon.classList.add("bi-copy");
+                }, 2000);
+            });
+        }
 
         document.addEventListener("DOMContentLoaded", typeName);
     </script>

@@ -13,10 +13,10 @@
             <a class="btn btn-outline-primary btn-lg px-4 hero-btn" href="#contact">Contact</a>
         </div>
 
-        <div class="resume-section text-center my-5">
-            <div class="d-flex justify-content-center align-items-center mb-3">
+        <div class="resume-section text-center mb-5" style="margin-top: 8rem;">
+            <div class="d-flex justify-content-center align-items-center mb-4">
                 <span class="dot me-2"></span>
-                <span class="available-text">Available For Work</span>
+                <span class="available-text blinking-text">Available For Work</span>
             </div>
 
             <a href="files/Mohamed Ibrahim-Resume.pdf" download class="btn btn-resume">
@@ -24,7 +24,7 @@
             </a>
         </div>
 
-        <div class="row justify-content-center text-center">
+        <div class="row justify-content-center text-center mt-5">
             <div class="col-lg-10">
                 <h1 class="d-xxl-inline-flex fw-bold mb-3 custom-heading">
                     Hello, I'm <span id="name" class="text-primary"></span>
@@ -36,25 +36,47 @@
             </div>
         </div>
 
+
         <div class="container-fluid text-center py-5">
-            <!-- Connect Button -->
-            <button id="connectBtn" class="btn btn-outline-primary btn-lg px-4 hero-btn mb-3">
-                Let's Connect
-            </button>
+            <div class="d-flex justify-content-center align-items-center gap-3">
+
+                <!-- Connect Button -->
+                <button id="connectBtn" class="btn btn-outline-primary btn-lg px-4 hero-btn">
+                    Let's Connect
+                </button>
+
+                <!-- Email Box with Copy Icon Inside -->
+                <div class="position-relative d-inline-block">
+
+                    <span id="emailText"
+                          class="btn btn-outline-primary btn-lg hero-btn d-flex align-items-center"
+                          style="padding-left: 1.25rem; padding-right: 3.2rem; pointer-events: none;">
+                        mohamedibrahims190@gmail.com
+                    </span>
+
+                    <i id="copyIcon"
+                       class="bi bi-copy position-absolute top-50 translate-middle-y text-primary"
+                       style="right: 16px; cursor: pointer;"
+                       onclick="copyEmail()"></i>
+
+                </div>
+
+            </div>
+
 
             <!-- Overlay for blur effect -->
             <div id="overlay" style="
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        backdrop-filter: blur(5px);
-        background-color: rgba(0,0,0,0.3);
-        z-index: 50;
-        transition: opacity 0.3s ease;
-    "></div>
+                 display: none;
+                 position: fixed;
+                 top: 0;
+                 left: 0;
+                 width: 100%;
+                 height: 100%;
+                 backdrop-filter: blur(5px);
+                 background-color: rgba(0,0,0,0.3);
+                 z-index: 50;
+                 transition: opacity 0.3s ease;">
+            </div>
 
             <!-- Connect Card -->
             <div id="connectCard" class="card text-light mx-auto p-4 rounded-4 shadow-lg"
@@ -65,17 +87,16 @@
 
                 <!-- Social Links -->
                 <div class="d-flex justify-content-center gap-3 mb-3 mt-2">
-                    <a href="#" class="text-light fs-5"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-light fs-5"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="text-light fs-5"><i class="bi bi-github"></i></a>
-                    <a href="mohamedibrahims190@gmail.com" class="text-light fs-5"><i class="bi bi-envelope"></i></a>
+                    <a href="https://www.linkedin.com/in/mohameibrahims/" class="text-light fs-5"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://www.instagram.com/mohamedibu_/" class="text-light fs-5"><i class="bi bi-instagram"></i></a>
+                    <a href="https://github.com/mohamedibrahims190-ui" class="text-light fs-5"><i class="bi bi-github"></i></a>
                 </div>
 
                 <!-- Action Buttons -->
-                <a href="mohamedibrahims190@gmail.com" class="btn btn-outline-light w-100 mb-2">
-                    <i class="bi bi-envelope"></i> SayedAnowar.Dev@Gmail.Com
+                <a href="mailto:mohamedibrahims190@gmail.com" class="btn btn-outline-light w-100 mb-2">
+                    <i class="bi bi-envelope"></i> mohamedibrahims190@gmail.com
                 </a>
-                <a href="tel:+971XXXXXXXXX" class="btn btn-outline-light w-100 mb-3">
+                <a href="tel:+971589383054" class="btn btn-outline-light w-100 mb-3">
                     <i class="bi bi-telephone"></i> Call Now
                 </a>
 
