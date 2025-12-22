@@ -5,12 +5,12 @@
 <div id="home">
     <div class="container">
         <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a class="btn btn-outline-primary btn-lg px-4 hero-btn" href="#home">Home</a>
-            <a class="btn btn-outline-primary btn-lg px-4 hero-btn" href="#about">About</a>
-            <a class="btn btn-outline-primary btn-lg px-4 hero-btn" href="#projects">Projects</a>
-            <a class="btn btn-outline-primary btn-lg px-4 hero-btn" href="#skills">Skills</a>
-            <a class="btn btn-outline-primary btn-lg px-4 hero-btn" href="#education">Education</a>
-            <a class="btn btn-outline-primary btn-lg px-4 hero-btn" href="#contact">Contact</a>
+            <a class="hero-btn" href="#home">Home</a>
+            <a class="hero-btn" href="#about">About</a>
+            <a class="hero-btn" href="#projects">Projects</a>
+            <a class="hero-btn" href="#skills">Skills</a>
+            <a class="hero-btn" href="#education">Education</a>
+            <a class="hero-btn" href="#contact">Contact</a>
         </div>
 
         <div class="resume-section text-center mb-5" style="margin-top: 8rem;">
@@ -19,19 +19,24 @@
                 <span class="available-text blinking-text">Available For Work</span>
             </div>
 
-            <a href="files/Mohamed Ibrahim-Resume.pdf" download class="btn btn-resume">
-                <i class="bi bi-download me-2"></i>Download Resume
+            <a href="files/Mohamed Ibrahim-Resume.pdf"
+               class="btn-resume-icon hero-btn"
+               download>
+                <i class="bi bi-download"></i>
+                Resume
             </a>
+
         </div>
 
         <div class="row justify-content-center text-center mt-5">
             <div class="col-lg-10">
-                <h1 class="d-xxl-inline-flex fw-bold mb-3 custom-heading">
-                    Hello, I'm <span id="name" class="text-primary"></span>
+                <h1 class="d-xxl-inline-flex fw-bold mb-3 custom-heading hero-title">
+                    <span class="hello-text">Hello, I’m</span>
+                    <span id="name" class="hello-text"></span>
                 </h1>
 
                 <h5 class="text-primary fw-semibold mb-4 hero-title" style="min-height: 58px;">
-                    <span id="title"></span>
+                    <span id="title" class="hello-text"></span>
                 </h5>
             </div>
         </div>
@@ -41,15 +46,15 @@
             <div class="d-flex justify-content-center align-items-center gap-3">
 
                 <!-- Connect Button -->
-                <button id="connectBtn" class="btn btn-outline-primary btn-lg px-4 hero-btn">
+                <span id="connectBtn" class="hero-btn">
                     Let's Connect
-                </button>
+                </span>
 
                 <!-- Email Box with Copy Icon Inside -->
                 <div class="position-relative d-inline-block">
 
                     <span id="emailText"
-                          class="btn btn-outline-primary btn-lg hero-btn d-flex align-items-center"
+                          class="hero-btn"
                           style="padding-left: 1.25rem; padding-right: 3.2rem; pointer-events: none;">
                         mohamedibrahims190@gmail.com
                     </span>

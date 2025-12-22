@@ -4,6 +4,7 @@ html {
     position: relative;
     min-height: 100%;
     scroll-behavior: smooth;
+    container: fluid;
 }
 
 /* Responsive font size */
@@ -15,20 +16,53 @@ html {
 
 /* Body styling */
 body {
-    margin-bottom: 60px;
-    background: repeating-linear-gradient( 270deg, #2c003e, /* deep purple */
-    #5b2a86, /* muted violet */
-    #9f47c5, /* soft magenta */
-    #2c003e /* loop back to deep purple */
-    );
-    background-size: 600% 600%;
-    animation: gradientAnimation 15s ease infinite;
-    color: white;
-    font-family: 'Arial', sans-serif; /* Merged with .custom-font */
-}
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at bottom, #1b0035 0%, #05010a 70%),
+        linear-gradient(270deg, #0b0033, #12004a, #1f0066, #0b0033);
+    background-size: cover, 400% 400%;
+    animation: galaxyGradient 25s ease-in-out infinite;
 
-/* Gradient animation */
-@keyframes gradientAnimation {
+    color: #f5f5f5;
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.65;
+    overflow-x: hidden;
+    position: relative;
+}
+    body::before,
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-repeat: repeat;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* Small distant stars */
+    body::before {
+        background-image: radial-gradient(1px 1px at 20% 30%, #ffffff, transparent), radial-gradient(1px 1px at 80% 70%, #ffffff, transparent), radial-gradient(1px 1px at 50% 50%, #ffffff, transparent), radial-gradient(1px 1px at 10% 90%, #ffffff, transparent), radial-gradient(1px 1px at 90% 10%, #ffffff, transparent);
+        background-size: 300px 300px;
+        animation: starsMove 120s linear infinite;
+        opacity: 0.6;
+    }
+
+    /* Brighter closer stars */
+    body::after {
+        background-image: radial-gradient(2px 2px at 40% 60%, #ffffff, transparent), radial-gradient(2px 2px at 70% 20%, #ffffff, transparent), radial-gradient(2px 2px at 30% 80%, #ffffff, transparent);
+        background-size: 600px 600px;
+        animation: starsMove 180s linear infinite reverse;
+        opacity: 0.8;
+    }
+
+    /* Keep content above stars */
+    body > * {
+        position: relative;
+        z-index: 1;
+    }
+
+@keyframes galaxyGradient {
     0% {
         background-position: 0% 50%;
     }
@@ -41,6 +75,17 @@ body {
         background-position: 0% 50%;
     }
 }
+
+@keyframes starsMove {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-2000px);
+    }
+}
+
 
 /* Form input focus */
 .btn:focus,
@@ -71,23 +116,32 @@ body {
 
 /* Buttons */
 .hero-btn {
-    transition: all 0.3s ease-in-out;
+    border-radius: 30px;
+    padding: 1rem 2.5rem; /* slightly bigger for better touch */
+    font-size: 1.10rem; /* bigger, more readable */
+    font-weight: 700; /* bolder for visibility */
+    letter-spacing: 0.5px;
+    color: #ffffff; /* white text for contrast */
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5); /* slightly darker shadow */
+    transition: all 0.35s ease;
+    text-decoration:none;
 }
 
+    /* Hover Effect */
     .hero-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-4px);
+        box-shadow: 0 18px 40px rgba(40, 255, 154, 0.6);
+        background: linear-gradient(135deg, #28ff9a, #6b2c91); /* reverse gradient */
     }
 
-/* Custom fonts and headings */
-.custom-font {
-    letter-spacing: 0.5px;
-}
+    /* Focus Accessibility */
+    .hero-btn:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(40, 255, 154, 0.5), 0 12px 28px rgba(0,0,0,0.5);
+    }
 
-.custom-heading {
-    letter-spacing: 0.8px;
-    line-height: 1.2;
-}
 
 /* Typing effect */
 #typing-text::after {
@@ -118,27 +172,56 @@ body {
 
 /* Text next to dot */
 .available-text {
+    color: #28ff9a;
     font-weight: 600;
-    font-size: 1.1rem;
-    color: white;
+    animation: softPulse 2s ease-in-out infinite;
 }
 
-/* Resume button styling */
-.btn-resume {
-    background: linear-gradient(90deg, #28a745, #218838);
-    color: white;
-    padding: 12px 25px;
-    font-size: 1rem;
-    border-radius: 50px;
-    border: none;
-    transition: all 0.3s ease;
-}
-
-    .btn-resume:hover {
-        background: linear-gradient(90deg, #218838, #28a745);
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+@keyframes softPulse {
+    0% {
+        opacity: 0.85;
+        text-shadow: 0 0 6px rgba(40, 255, 154, 0.3);
     }
+
+    50% {
+        opacity: 1;
+        text-shadow: 0 0 14px rgba(40, 255, 154, 0.7);
+    }
+
+    100% {
+        opacity: 0.85;
+        text-shadow: 0 0 6px rgba(40, 255, 154, 0.3);
+    }
+}
+
+
+/* Resume Download Button */
+.btn-resume-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.85rem 2.3rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    border-radius: 999px;
+    border: none;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    transition: all 0.35s ease;
+}
+
+    .btn-resume-icon i {
+        transition: transform 0.35s ease;
+    }
+
+    .btn-resume-icon:hover {
+        transform: translateY(-3px);
+    }
+
+        .btn-resume-icon:hover i {
+            transform: translateY(4px);
+        }
+
 
 /* Optional: spacing */
 .resume-section {
@@ -162,4 +245,88 @@ body {
         color: green;
     }
 }
+
+.hello-text {
+    background: linear-gradient(270deg, #9f47c5, #28ff9a, #9f47c5);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: helloGradient 4s ease infinite;
+}
+
+@keyframes helloGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Navbar background for dark theme */
+.custom-navbar {
+    background: rgba(15, 0, 35, 0.85); /* semi-transparent dark */
+    backdrop-filter: blur(10px); /* glass effect */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+    /* Brand styling */
+    .custom-navbar .navbar-brand {
+        font-size: 1.5rem;
+        color: #ffffff;
+        letter-spacing: 1px;
+        transition: color 0.3s ease;
+    }
+
+        .custom-navbar .navbar-brand:hover {
+            color: #28ff9a; /* matching galaxy accent */
+        }
+
+    /* Nav links styling */
+    .custom-navbar .nav-link {
+        color: #f1f1f1;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+        /* Hover underline animation */
+        .custom-navbar .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: #28ff9a;
+            transition: width 0.3s ease;
+        }
+
+        .custom-navbar .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Active link style */
+        .custom-navbar .nav-link.active {
+            color: #28ff9a;
+        }
+
+/* Toggler button for small screens */
+.navbar-dark .navbar-toggler {
+    border-color: #28ff9a;
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(40,255,154,0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
 
