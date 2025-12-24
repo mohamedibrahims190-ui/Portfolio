@@ -44,7 +44,7 @@
         </div>
 
 
-        <div class="container-fluid text-center py-5">
+        <div class="text-center py-5">
             <div class="d-flex justify-content-center align-items-center gap-3">
 
                 <!-- Connect Button -->
@@ -123,12 +123,99 @@
     </div>
     </section>
         <section id="about">
-            <div class="text-primary fw-semibold hero-title text-center" style="font-size: 5rem;">About Me</div>
-        </section>
-    
+        <div class="about-container">
+            <div class="about-bg hello-text">ABOUT</div>
+            <div class="about-title hello-text">About Me</div>
+        </div>
+        <!-- Main About Section -->
+        <div class="d-flex align-items-center p-5 hello-text" style="max-width: 1000px; margin: 0 auto; gap: 40px; flex-wrap: wrap;">
+            <!-- Text on the left -->
+            <div style="flex: 1; min-width: 300px; font-size:18px">
+                <h1>Hi There!</h1>
+                <p>
+                    I’m <strong>Mohamed Ibrahim</strong>, a <strong>.NET Developer</strong> and technology enthusiast with <strong>3+ years of experience</strong> building robust, scalable, and secure web applications. I specialize in <strong>C#, .NET Core, ASP.NET Web API</strong>, and working with databases like <strong>SQL Server, MySQL, and PostgreSQL</strong>.
+                </p>
+                <p>
+                    Passionate about clean code and seamless backend solutions, I’m always learning and exploring new technologies to <strong>improve performance</strong> and deliver <strong>quality software</strong>. I thrive in collaborative environments, enjoy solving complex problems, and am open to <strong>full-time opportunities</strong> and <strong>freelance projects</strong>.
+                </p>
+            </div>
+
+            <div class="profile-section text-center">
+                <!-- Profile Image -->
+                <div class="profile-container">
+                    <div class="profile-glow"></div>
+                    <div class="profile-gradient">
+                        <img src="images/Mohamed_Ibrahim_Professional_Image.png" alt="Mohamed Ibrahim" class="profile-image">
+                    </div>
+                </div>
+
+                <!-- Social Links below the profile -->
+                <div class="d-flex justify-content-center gap-3 mt-3">
+                    <a href="https://www.linkedin.com/in/mohameibrahims/" class="text-light fs-5" target="_blank"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://www.instagram.com/mohamedibu_/" class="text-light fs-5" target="_blank"><i class="bi bi-instagram"></i></a>
+                    <a href="https://github.com/mohamedibrahims190-ui" class="text-light fs-5" target="_blank"><i class="bi bi-github"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
         <section id="projects">
-            <!-- Projects content -->
+            <div class="about-container">
+                <div class="about-bg hello-text">PORTFOLIO</div>
+                <div class="about-title hello-text">Projects</div>
+            </div>
+
+            <div class="projects-grid">
+            <!-- Text on the left -->
+            <div class="hello-text" style="flex: 1; min-width: 300px; font-size:18px">
+                <h1>Client: Nippon Paints Pvt Ltd, India!</h1>
+                <p>
+                    Worked on end-to-end data and workflow automation for Nippon Paint’s home painting services. 
+                    Automated technology and labor processes in Ninja Blaze, accelerating service operations and
+                    implementing precise user–dealer–lead mappings to ensure high data accuracy.
+                    Led the design and maintenance of Aikyam, a critical data hierarchy platform supporting 
+                    10+ live business applications. Built using React JS, JavaScript, and Microservice APIs, 
+                    it enabled dynamic management of users, dealers, pincodes Delivered UI-driven and 
+                    file-based automation for seamless data lifecycle operations and ensured system-wide data 
+                    consistency through caching and audit trails.
+                    </p>
+            </div>
+                <div class="project-card">
+                    <div class="project-image-wrapper">
+                        <img src="images/Ninja_Blaze.png" alt="Ninja Blaze" class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>Ninja Blaze</h3>
+                        <p class="project-desc">
+                            Web-based application to automate technology and labor workflows for a home painting platform,
+                            enabling end-to-end lead management for Nippon Paint with hierarchical data mapping and user–dealer relationships.
+                        </p>
+                    <span class="tech-stack">ASP.NET Core · Web API · PostgreSQL Server · ApachiNifi · Hangfire</span>
+                        <div class="project-links">
+                            <a href="https://ninjablaze.nipponpaint.co.in/#/" target="_blank">Live</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image-wrapper">
+                        <img src="images/Aikyam.png" alt="Ninja Blaze" class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>Aikyam</h3>
+                        <p class="project-desc">
+                            A powerful database management system handling 10+ projects, mapping users, dealers, customers, leads, 
+                            and pincodes with hierarchical precision. Streamlines complex data relationships and ensures accurate, 
+                            scalable project management.
+                        </p>
+                    <span class="tech-stack">ASP.NET Core · Graph API · NO SQL Server · Neo4J · ApachiNifi · Redis</span>
+                        <div class="project-links">
+                            <a href="https://aikyam.nipponpaint.co.in/" target="_blank">Live</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+
     
         <section id="skills">
             <!-- Skills content -->
