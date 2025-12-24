@@ -142,25 +142,6 @@ body {
         box-shadow: 0 0 0 3px rgba(40, 255, 154, 0.5), 0 12px 28px rgba(0,0,0,0.5);
     }
 
-
-/* Typing effect */
-#typing-text::after {
-    content: "|";
-    margin-left: 5px;
-    animation: blink 1s infinite;
-}
-
-@keyframes blink {
-    0%, 50%, 100% {
-        opacity: 1;
-    }
-
-    25%, 75% {
-        opacity: 0;
-    }
-}
-
-/*Green Point Before Available For Work in Index.cshtml*/
 /* Green dot */
 .dot {
     width: 12px;
@@ -232,18 +213,6 @@ body {
 .hero-title {
     font-size: 3rem; /* very large */
     line-height: 1.2;
-}
-
-.blinking-text {
-    animation: blinkColors 1s infinite;
-    font-weight: bold; /* optional */
-}
-
-@keyframes blinkColors {
-
-    100% {
-        color: green;
-    }
 }
 
 .hello-text {
@@ -329,4 +298,35 @@ body {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(40,255,154,0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
+.sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
 
+/* Offset sections so sticky nav doesn’t overlap */
+section {
+    scroll-margin-top: 120px; /* equal to navbar height */
+    padding: 50px 20px;
+    min-height: 100vh;
+}
+.nav-btn {
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    border-radius: 25px;
+    padding: 0.6rem 1.6rem;
+    transition: all 0.3s ease;
+}
+
+.nav-btn.active {
+    /* Highlight active nav button */
+    background: #28ff9a; /* You can change this color per section if you want */
+    color: #000;
+    box-shadow: 0 0 15px rgba(40, 255, 154, 0.6);
+}

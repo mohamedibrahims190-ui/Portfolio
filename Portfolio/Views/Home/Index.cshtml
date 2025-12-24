@@ -2,24 +2,26 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div id="home">
-    <div class="container">
+<div>
+    <div class="sticky-nav">
         <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a class="hero-btn" href="#home">Home</a>
-            <a class="hero-btn" href="#about">About</a>
-            <a class="hero-btn" href="#projects">Projects</a>
-            <a class="hero-btn" href="#skills">Skills</a>
-            <a class="hero-btn" href="#education">Education</a>
-            <a class="hero-btn" href="#contact">Contact</a>
+            <a class="hero-btn nav-btn" href="#home">Home</a>
+            <a class="hero-btn nav-btn" href="#about">About</a>
+            <a class="hero-btn nav-btn" href="#projects">Projects</a>
+            <a class="hero-btn nav-btn" href="#skills">Skills</a>
+            <a class="hero-btn nav-btn" href="#education">Education</a>
+            <a class="hero-btn nav-btn" href="#contact">Contact</a>
         </div>
-
+    </div>
+    <section id="home">
+    <div class="container">
         <div class="resume-section text-center mb-5" style="margin-top: 8rem;">
             <div class="d-flex justify-content-center align-items-center mb-4">
                 <span class="dot me-2"></span>
-                <span class="available-text blinking-text">Available For Work</span>
+                <span class="available-text hello-text fw-bolder">Available For Work</span>
             </div>
 
-            <a href="files/Mohamed Ibrahim-Resume.pdf"
+            <a href="files/Mohamed-Ibrahim-Resume.pdf"
                class="btn-resume-icon hero-btn"
                download>
                 <i class="bi bi-download"></i>
@@ -46,7 +48,7 @@
             <div class="d-flex justify-content-center align-items-center gap-3">
 
                 <!-- Connect Button -->
-                <span id="connectBtn" class="hero-btn">
+                <span id="connectBtn" class="hero-btn nav-btn">
                     Let's Connect
                 </span>
 
@@ -119,30 +121,26 @@
             </div>
         </div>
     </div>
+    </section>
+        <section id="about">
+            <div class="text-primary fw-semibold hero-title text-center" style="font-size: 5rem;">About Me</div>
+        </section>
+    
+        <section id="projects">
+            <!-- Projects content -->
+        </section>
+    
+        <section id="skills">
+            <!-- Skills content -->
+        </section>
+    
+        <section id="education">
+            <!-- Education content -->
+        </section>
+    
+        <section id="contact">
+            <!-- Contact content -->
+        </section>
 </div>
 
-<!-- About Section -->
-<div id="about" style="min-height: 100vh; padding: 50px 20px;">
-    <!-- Your About content -->
-</div>
-
-<!-- Projects Section -->
-<div id="projects" style="min-height: 100vh; padding: 50px 20px;">
-    <!-- Your Projects content -->
-</div>
-
-<!-- Skills Section -->
-<div id="skills" style="min-height: 100vh; padding: 50px 20px;">
-    <!-- Your Skills content -->
-</div>
-
-<!-- Education Section -->
-<div id="education" style="min-height: 100vh; padding: 50px 20px;">
-    <!-- Your Education content -->
-</div>
-
-<!-- Contact Section -->
-<div id="contact" style="min-height: 100vh; padding: 50px 20px;">
-    <!-- Optional: Repeat connect card if needed -->
-</div>
 
