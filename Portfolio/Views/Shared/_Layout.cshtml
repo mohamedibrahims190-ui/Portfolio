@@ -52,108 +52,155 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script>
-        const nameText = "\u00A0Mohamed Ibrahim"; // Leading space
-        const titles = [
-            "Software Developer (.NET)",
-            "Backend Developer (.NET)"
-        ];
+        document.addEventListener("DOMContentLoaded", () => {
 
-        let nameIndex = 0;
-        let titleIndex = 0;
-        let roleIndex = 0;
+            /* ===============================
+               Typing Animation
+            =============================== */
 
-        const typingSpeed = 70;
-        const erasingSpeed = 50;
-        const delayAfterTyping = 1500;
+            const nameText = "\u00A0Mohamed Ibrahim";
+            const titles = [
+                "Software Developer (.NET)",
+                "Backend Developer (.NET)"
+            ];
 
-        function typeName() {
-            if (nameIndex < nameText.length) {
-                document.getElementById("name").innerHTML += nameText.charAt(nameIndex);
-                nameIndex++;
-                setTimeout(typeName, typingSpeed);
-            } else {
-                setTimeout(typeTitle, 500); // start title after name
+            const nameEl = document.getElementById("name");
+            const titleEl = document.getElementById("title");
+
+            let nameIndex = 0;
+            let titleIndex = 0;
+            let roleIndex = 0;
+
+            const typingSpeed = 70;
+            const erasingSpeed = 50;
+            const delayAfterTyping = 1500;
+
+            function typeName() {
+                if (nameIndex < nameText.length) {
+                    nameEl.textContent += nameText.charAt(nameIndex++);
+                    setTimeout(typeName, typingSpeed);
+                } else {
+                    setTimeout(typeTitle, 500);
+                }
             }
-        }
 
-        function typeTitle() {
-            const currentTitle = titles[roleIndex];
-
-            if (titleIndex < currentTitle.length) {
-                document.getElementById("title").innerHTML += currentTitle.charAt(titleIndex);
-                titleIndex++;
-                setTimeout(typeTitle, typingSpeed);
-            } else {
-                setTimeout(eraseTitle, delayAfterTyping);
+            function typeTitle() {
+                const currentTitle = titles[roleIndex];
+                if (titleIndex < currentTitle.length) {
+                    titleEl.textContent += currentTitle.charAt(titleIndex++);
+                    setTimeout(typeTitle, typingSpeed);
+                } else {
+                    setTimeout(eraseTitle, delayAfterTyping);
+                }
             }
-        }
 
-        function eraseTitle() {
-            if (titleIndex > 0) {
-                const currentText = titles[roleIndex].substring(0, titleIndex - 1);
-                document.getElementById("title").innerHTML = currentText;
-                titleIndex--;
-                setTimeout(eraseTitle, erasingSpeed);
-            } else {
-                roleIndex = (roleIndex + 1) % titles.length;
-                setTimeout(typeTitle, typingSpeed);
+            function eraseTitle() {
+                if (titleIndex > 0) {
+                    titleEl.textContent = titles[roleIndex].substring(0, --titleIndex);
+                    setTimeout(eraseTitle, erasingSpeed);
+                } else {
+                    roleIndex = (roleIndex + 1) % titles.length;
+                    setTimeout(typeTitle, typingSpeed);
+                }
             }
-        }
 
-        const connectBtn = document.getElementById("connectBtn");
-        const connectCard = document.getElementById("connectCard");
-        const closeCard = document.getElementById("closeCard");
-        const overlay = document.getElementById("overlay");
+            typeName();
 
-        // Show card with overlay
-        connectBtn.addEventListener("click", () => {
-            overlay.style.display = "block";
-            overlay.style.opacity = 0;
-            connectCard.style.display = "block";
-            connectCard.style.opacity = 0;
+            /* ===============================
+               Connect Card Modal
+            =============================== */
 
-            setTimeout(() => {
-                overlay.style.opacity = 1;
-                connectCard.style.opacity = 1;
-            }, 10);
+            const connectBtn = document.getElementById("connectBtn");
+            const connectCard = document.getElementById("connectCard");
+            const closeCard = document.getElementById("closeCard");
+            const overlay = document.getElementById("overlay");
+
+            if (connectBtn && connectCard && closeCard && overlay) {
+
+                connectBtn.addEventListener("click", () => {
+                    overlay.style.display = "block";
+                    connectCard.style.display = "block";
+
+                    requestAnimationFrame(() => {
+                        overlay.style.opacity = "1";
+                        connectCard.style.opacity = "1";
+                    });
+                });
+
+                const closeModal = () => {
+                    overlay.style.opacity = "0";
+                    connectCard.style.opacity = "0";
+                    setTimeout(() => {
+                        overlay.style.display = "none";
+                        connectCard.style.display = "none";
+                    }, 300);
+                };
+
+                closeCard.addEventListener("click", closeModal);
+                overlay.addEventListener("click", closeModal);
+            }
+
+            /* ===============================
+               Copy Email
+            =============================== */
+
+            window.copyEmail = function () {
+                const emailEl = document.getElementById("emailText");
+                const icon = document.getElementById("copyIcon");
+
+                if (!emailEl || !icon) return;
+
+                navigator.clipboard.writeText(emailEl.textContent).then(() => {
+                    icon.classList.replace("bi-copy", "bi-check-circle-fill");
+
+                    setTimeout(() => {
+                        icon.classList.replace("bi-check-circle-fill", "bi-copy");
+                    }, 2000);
+                });
+            };
         });
 
-        // Close card and overlay
-        closeCard.addEventListener("click", () => {
-            overlay.style.opacity = 0;
-            connectCard.style.opacity = 0;
-            setTimeout(() => {
-                overlay.style.display = "none";
-                connectCard.style.display = "none";
-            }, 300);
-        });
+        /* ===============================
+               Five page scrolling and active button logic
+           =============================== */
+        const navButtons = document.querySelectorAll(".nav-btn");
+        const sections = document.querySelectorAll("section");
 
-        // Close card if clicked outside
-        overlay.addEventListener("click", () => {
-            closeCard.click();
-        });
+        // Smooth scroll on click
+        navButtons.forEach(btn => {
+            btn.addEventListener("click", e => {
+                if (btn.classList.contains("btn-resume")) return; /*Resume download*/
+                e.preventDefault();
+                const targetId = btn.getAttribute("href").substring(1);
+                const targetSection = document.getElementById(targetId);
 
-            function copyEmail() {
-            const email = document.getElementById("emailText").innerText;
-            const icon = document.getElementById("copyIcon");
+                targetSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
 
-            navigator.clipboard.writeText(email).then(() => {
-                // Change icon to tick
-                icon.classList.remove("bi-copy");
-                icon.classList.add("bi-check-circle-fill");
-
-                // Optional: revert back after 2 seconds
-                setTimeout(() => {
-                    icon.classList.remove("bi-check-circle-fill");
-                    icon.classList.add("bi-copy");
-                }, 2000);
+                // Optional: highlight immediately on click
+                navButtons.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
             });
-        }
+        });
 
-        document.addEventListener("DOMContentLoaded", typeName);
+            const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navButtons.forEach(btn => btn.classList.remove("active"));
+                        const activeBtn = document.querySelector(`.nav-btn[href="#${entry.target.id}"]`);
+                        if (activeBtn) activeBtn.classList.add("active");
+                    }
+                });
+            },
+            { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
+        );
+
+        sections.forEach(section => observer.observe(section));
+
     </script>
-
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
