@@ -1,78 +1,74 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div>
-    <div class="sticky-nav">
-        <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a class="hero-btn nav-btn" href="#home">Home</a>
-            <a class="hero-btn nav-btn" href="#about">About</a>
-            <a class="hero-btn nav-btn" href="#projects">Projects</a>
-            <a class="hero-btn nav-btn" href="#skills">Skills</a>
-            <a class="hero-btn nav-btn" href="#education">Education</a>
-            <a class="hero-btn nav-btn" href="#contact">Contact</a>
-        </div>
-    </div>
-    <section id="home">
-    <div class="container">
-        <div class="resume-section text-center mb-5" style="margin-top: 8rem;">
-            <div class="d-flex justify-content-center align-items-center mb-4">
-                <span class="dot me-2"></span>
-                <span class="available-text hello-text fw-bolder">Available For Work</span>
-            </div>
-
-            <a href="files/Mohamed-Ibrahim-Resume.pdf"
-               class="btn-resume-icon hero-btn"
-               download>
-                <i class="bi bi-download"></i>
-                Resume
-            </a>
-
-        </div>
-
-        <div class="row justify-content-center text-center mt-5">
-            <div class="col-lg-10">
-                <h1 class="d-xxl-inline-flex fw-bold mb-3 custom-heading hero-title">
-                    <span class="hello-text">Hello, I’m</span>
-                    <span id="name" class="hello-text"></span>
-                </h1>
-
-                <h5 class="text-primary fw-semibold mb-4 hero-title" style="min-height: 58px;">
-                    <span id="title" class="hello-text"></span>
-                </h5>
+﻿  <div>
+        <div class="sticky-nav">
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a class="hero-btn nav-btn" href="#home">Home</a>
+                <a class="hero-btn nav-btn" href="#about">About</a>
+                <a class="hero-btn nav-btn" href="#projects">Projects</a>
+                <a class="hero-btn nav-btn" href="#skills">Skills</a>
+                <a class="hero-btn nav-btn" href="#education">Education</a>
+                <a class="hero-btn nav-btn" href="#contact">Contact</a>
             </div>
         </div>
+        <section id="home">
+            <div class="container">
+                <div class="resume-section text-center mb-5" style="margin-top: 5rem;">
+                    <div class="d-flex justify-content-center align-items-center mb-5">
+                        <span class="dot me-2"></span>
+                        <span class="available-text hello-text fw-bolder">Available For Work</span>
+                    </div>
 
-
-        <div class="text-center py-5">
-            <div class="d-flex justify-content-center align-items-center gap-3">
-
-                <!-- Connect Button -->
-                <span id="connectBtn" class="hero-btn nav-btn">
-                    Let's Connect
-                </span>
-
-                <!-- Email Box with Copy Icon Inside -->
-                <div class="position-relative d-inline-block">
-
-                    <span id="emailText"
-                          class="hero-btn"
-                          style="padding-left: 1.25rem; padding-right: 3.2rem; pointer-events: none;">
-                        mohamedibrahims190@gmail.com
-                    </span>
-
-                    <i id="copyIcon"
-                       class="bi bi-copy position-absolute top-50 translate-middle-y text-primary"
-                       style="right: 16px; cursor: pointer;"
-                       onclick="copyEmail()"></i>
+                    <a href="files/Mohamed-Ibrahim-Resume.pdf"
+                       class="btn-resume-icon hero-btn resume-btn"
+                       download
+                       aria-label="Download Mohamed Ibrahim Resume">
+                        <i class="bi bi-download" aria-hidden="true"></i>
+                        <span>Download Resume</span>
+                    </a>
 
                 </div>
 
-            </div>
+                <div class="row justify-content-center text-center mt-5">
+                    <div class="col-lg-10">
+                        <h1 class="d-xxl-inline-flex fw-bold mb-3 custom-heading hero-title" style="font-size: 60px;">
+                            <span class="hello-text">Hello, I’m</span>
+                            <span id="name" class="hello-text"></span>
+                        </h1>
+
+                        <h5 class="text-primary fw-semibold mb-4 hero-title" style="min-height: 58px;">
+                            <span id="title" class="hello-text"></span>
+                        </h5>
+                    </div>
+                </div>
 
 
-            <!-- Overlay for blur effect -->
-            <div id="overlay" style="
+                <div class="text-center py-5">
+                    <div class="d-flex justify-content-center align-items-center gap-3">
+
+                        <!-- Connect Button -->
+                        <span id="connectBtn" class="hero-btn nav-btn">
+                            Let's Connect
+                        </span>
+
+                        <!-- Email Box with Copy Icon Inside -->
+                        <div class="position-relative d-inline-block">
+
+                            <span id="emailText"
+                                  class="hero-btn"
+                                  style="padding-left: 1.25rem; padding-right: 3.2rem; pointer-events: none;">
+                                mohamedibrahims190@gmail.com
+                            </span>
+
+                            <i id="copyIcon"
+                               class="bi bi-copy position-absolute top-50 translate-middle-y text-primary"
+                               style="right: 16px; cursor: pointer;"
+                               onclick="copyEmail()"></i>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Overlay for blur effect -->
+                    <div id="overlay" style="
                  display: none;
                  position: fixed;
                  top: 0;
@@ -83,103 +79,105 @@
                  background-color: rgba(0,0,0,0.3);
                  z-index: 50;
                  transition: opacity 0.3s ease;">
+                    </div>
+
+                    <!-- Connect Card -->
+                    <div id="connectCard" class="card text-light mx-auto p-4 rounded-4 shadow-lg"
+                         style="max-width: 400px; display: none; background-color: transparent; border: 1px solid white; z-index: 100; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: all 0.3s ease;">
+
+                        <!-- Close Button -->
+                        <button id="closeCard" class="btn-close btn-close-white float-end" aria-label="Close"></button>
+
+                        <!-- Social Links -->
+                        <div class="d-flex justify-content-center gap-3 mb-3 mt-2">
+                            <a href="https://www.linkedin.com/in/mohameibrahims/" class="text-light fs-5"><i class="bi bi-linkedin"></i></a>
+                            <a href="https://www.instagram.com/mohamedibu_/" class="text-light fs-5"><i class="bi bi-instagram"></i></a>
+                            <a href="https://github.com/mohamedibrahims190-ui" class="text-light fs-5"><i class="bi bi-github"></i></a>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <a href="mailto:mohamedibrahims190@gmail.com" class="btn btn-outline-light w-100 mb-2">
+                            <i class="bi bi-envelope"></i> mohamedibrahims190@gmail.com
+                        </a>
+                        <a href="tel:+971589383054" class="btn btn-outline-light w-100 mb-3">
+                            <i class="bi bi-telephone"></i> Call Now
+                        </a>
+
+                        <!-- Contact Form -->
+                        <p>Or Send A Message</p>
+                        <form>
+                            <label class="visually-hidden" for="emailInput">Your Email</label>
+                            <input type="email" id="emailInput" class="form-control mb-2" placeholder="Your Email" required>
+
+                            <label class="visually-hidden" for="messageInput">Your Message</label>
+                            <textarea id="messageInput" class="form-control mb-3" rows="3" placeholder="Your Message" required></textarea>
+
+                            <button type="submit" class="btn btn-light w-100">Send Message</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <!-- Connect Card -->
-            <div id="connectCard" class="card text-light mx-auto p-4 rounded-4 shadow-lg"
-                 style="max-width: 400px; display: none; background-color: transparent; border: 1px solid white; z-index: 100; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: all 0.3s ease;">
-
-                <!-- Close Button -->
-                <button id="closeCard" class="btn-close btn-close-white float-end" aria-label="Close"></button>
-
-                <!-- Social Links -->
-                <div class="d-flex justify-content-center gap-3 mb-3 mt-2">
-                    <a href="https://www.linkedin.com/in/mohameibrahims/" class="text-light fs-5"><i class="bi bi-linkedin"></i></a>
-                    <a href="https://www.instagram.com/mohamedibu_/" class="text-light fs-5"><i class="bi bi-instagram"></i></a>
-                    <a href="https://github.com/mohamedibrahims190-ui" class="text-light fs-5"><i class="bi bi-github"></i></a>
+        </section>
+        <section id="about">
+            <div class="about-container">
+                <div class="about-bg hello-text">ABOUT</div>
+                <div class="about-title hello-text">About Me</div>
+            </div>
+            <h1 class="d-flex align-items-center justify-content-center hello-text" style="font-size: 15px">MORE ABOUT ME</h1>
+            <!-- Main About Section -->
+            <div class="d-flex align-items-center p-5 hello-text" style="max-width: 1000px; margin: 0 auto; gap: 40px; flex-wrap: wrap;">
+                <!-- Text on the left -->
+                <div style="margin-top: 50px; flex: 1; min-width: 300px; font-size:18px">
+                    <h1>Hi There!</h1>
+                    <p>
+                        I’m <strong>Mohamed Ibrahim</strong>, a <strong>.NET Developer</strong> and technology enthusiast with <strong>4 years of experience</strong> building robust, scalable, and secure web applications. I specialize in <strong>C#, .NET Core, ASP.NET Web API</strong>, and working with databases like <strong>SQL Server, MySQL, NoSQL (Graph Database: Neo4j) and PostgreSQL</strong>.
+                    </p>
+                    <p>
+                        Passionate about clean code and seamless backend solutions, I’m always learning and exploring new technologies to <strong>improve performance</strong> and deliver <strong>quality software</strong>. I thrive in collaborative environments, enjoy solving complex problems, and am open to <strong>full-time opportunities</strong> and <strong>freelance projects</strong>.
+                    </p>
                 </div>
 
-                <!-- Action Buttons -->
-                <a href="mailto:mohamedibrahims190@gmail.com" class="btn btn-outline-light w-100 mb-2">
-                    <i class="bi bi-envelope"></i> mohamedibrahims190@gmail.com
-                </a>
-                <a href="tel:+971589383054" class="btn btn-outline-light w-100 mb-3">
-                    <i class="bi bi-telephone"></i> Call Now
-                </a>
+                <div class="profile-section text-center" style="margin-top: 55px">
+                    <!-- Profile Image -->
+                    <div class="profile-container">
+                        <div class="profile-glow"></div>
+                        <div class="profile-gradient">
+                            <img src="images/Mohamed_Ibrahim_Professional_Image.png" alt="Mohamed Ibrahim" class="profile-image">
+                        </div>
+                    </div>
 
-                <!-- Contact Form -->
-                <p>Or Send A Message</p>
-                <form>
-                    <label class="visually-hidden" for="emailInput">Your Email</label>
-                    <input type="email" id="emailInput" class="form-control mb-2" placeholder="Your Email" required>
-
-                    <label class="visually-hidden" for="messageInput">Your Message</label>
-                    <textarea id="messageInput" class="form-control mb-3" rows="3" placeholder="Your Message" required></textarea>
-
-                    <button type="submit" class="btn btn-light w-100">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    </section>
-        <section id="about">
-        <div class="about-container">
-            <div class="about-bg hello-text">ABOUT</div>
-            <div class="about-title hello-text">About Me</div>
-        </div>
-        <!-- Main About Section -->
-        <div class="d-flex align-items-center p-5 hello-text" style="max-width: 1000px; margin: 0 auto; gap: 40px; flex-wrap: wrap;">
-            <!-- Text on the left -->
-            <div style="flex: 1; min-width: 300px; font-size:18px">
-                <h1>Hi There!</h1>
-                <p>
-                    I’m <strong>Mohamed Ibrahim</strong>, a <strong>.NET Developer</strong> and technology enthusiast with <strong>3+ years of experience</strong> building robust, scalable, and secure web applications. I specialize in <strong>C#, .NET Core, ASP.NET Web API</strong>, and working with databases like <strong>SQL Server, MySQL, and PostgreSQL</strong>.
-                </p>
-                <p>
-                    Passionate about clean code and seamless backend solutions, I’m always learning and exploring new technologies to <strong>improve performance</strong> and deliver <strong>quality software</strong>. I thrive in collaborative environments, enjoy solving complex problems, and am open to <strong>full-time opportunities</strong> and <strong>freelance projects</strong>.
-                </p>
-            </div>
-
-            <div class="profile-section text-center">
-                <!-- Profile Image -->
-                <div class="profile-container">
-                    <div class="profile-glow"></div>
-                    <div class="profile-gradient">
-                        <img src="images/Mohamed_Ibrahim_Professional_Image.png" alt="Mohamed Ibrahim" class="profile-image">
+                    <!-- Social Links below the profile -->
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <a href="https://www.linkedin.com/in/mohameibrahims/" class="text-light fs-5" target="_blank"><i class="bi bi-linkedin"></i></a>
+                        <a href="https://www.instagram.com/mohamedibu_/" class="text-light fs-5" target="_blank"><i class="bi bi-instagram"></i></a>
+                        <a href="https://github.com/mohamedibrahims190-ui" class="text-light fs-5" target="_blank"><i class="bi bi-github"></i></a>
                     </div>
                 </div>
 
-                <!-- Social Links below the profile -->
-                <div class="d-flex justify-content-center gap-3 mt-3">
-                    <a href="https://www.linkedin.com/in/mohameibrahims/" class="text-light fs-5" target="_blank"><i class="bi bi-linkedin"></i></a>
-                    <a href="https://www.instagram.com/mohamedibu_/" class="text-light fs-5" target="_blank"><i class="bi bi-instagram"></i></a>
-                    <a href="https://github.com/mohamedibrahims190-ui" class="text-light fs-5" target="_blank"><i class="bi bi-github"></i></a>
-                </div>
             </div>
-
-        </div>
-    </section>
+        </section>
         <section id="projects">
             <div class="about-container">
                 <div class="about-bg hello-text">PORTFOLIO</div>
                 <div class="about-title hello-text">Projects</div>
             </div>
+            <h1 class="d-flex align-items-center justify-content-center hello-text" style="font-size: 15px">FEATURED CASE STUDIES</h1>
 
             <div class="projects-grid">
-            <!-- Text on the left -->
-            <div class="hello-text" style="flex: 1; min-width: 300px; font-size:18px">
-                <h1>Client: Nippon Paints Pvt Ltd, India!</h1>
-                <p>
-                    Worked on end-to-end data and workflow automation for Nippon Paint’s home painting services. 
-                    Automated technology and labor processes in Ninja Blaze, accelerating service operations and
-                    implementing precise user–dealer–lead mappings to ensure high data accuracy.
-                    Led the design and maintenance of Aikyam, a critical data hierarchy platform supporting 
-                    10+ live business applications. Built using React JS, JavaScript, and Microservice APIs, 
-                    it enabled dynamic management of users, dealers, pincodes Delivered UI-driven and 
-                    file-based automation for seamless data lifecycle operations and ensured system-wide data 
-                    consistency through caching and audit trails.
+                <!-- Text on the left -->
+                <div class="hello-text" style="flex: 1; min-width: 300px; font-size:18px">
+                    <h1>Client: Nippon Paints Pvt Ltd, India!</h1>
+                    <p>
+                        Worked on end-to-end data and workflow automation for Nippon Paint’s home painting services.
+                        Automated technology and labor processes in Ninja Blaze, accelerating service operations and
+                        implementing precise user–dealer–lead mappings to ensure high data accuracy.
+                        Led the design and maintenance of Aikyam, a critical data hierarchy platform supporting
+                        10+ live business applications. Built using React JS, JavaScript, and Microservice APIs,
+                        it enabled dynamic management of users, dealers, pincodes Delivered UI-driven and
+                        file-based automation for seamless data lifecycle operations and ensured system-wide data
+                        consistency through caching and audit trails.
                     </p>
-            </div>
+                </div>
                 <div class="project-card">
                     <div class="project-image-wrapper">
                         <img src="images/Ninja_Blaze.png" alt="Ninja Blaze" class="project-image">
@@ -190,7 +188,7 @@
                             Web-based application to automate technology and labor workflows for a home painting platform,
                             enabling end-to-end lead management for Nippon Paint with hierarchical data mapping and user–dealer relationships.
                         </p>
-                    <span class="tech-stack">ASP.NET Core · Web API · PostgreSQL Server · ApachiNifi · Hangfire</span>
+                        <span class="tech-stack">ASP.NET Core · Web API · PostgreSQL Server · ApachiNifi · Hangfire</span>
                         <div class="project-links">
                             <a href="https://ninjablaze.nipponpaint.co.in/#/" target="_blank">Live</a>
                         </div>
@@ -203,11 +201,11 @@
                     <div class="project-content">
                         <h3>Aikyam</h3>
                         <p class="project-desc">
-                            A powerful database management system handling 10+ projects, mapping users, dealers, customers, leads, 
-                            and pincodes with hierarchical precision. Streamlines complex data relationships and ensures accurate, 
+                            A powerful database management system handling 10+ projects, mapping users, dealers, customers, leads,
+                            and pincodes with hierarchical precision. Streamlines complex data relationships and ensures accurate,
                             scalable project management.
                         </p>
-                    <span class="tech-stack">ASP.NET Core · Graph API · NO SQL Server · Neo4J · ApachiNifi · Redis</span>
+                        <span class="tech-stack">ASP.NET Core · Graph API · NO SQL Server · Neo4J · ApachiNifi · Redis</span>
                         <div class="project-links">
                             <a href="https://aikyam.nipponpaint.co.in/" target="_blank">Live</a>
                         </div>
@@ -216,18 +214,154 @@
             </div>
         </section>
 
-    
         <section id="skills">
-            <!-- Skills content -->
+            <div class="about-container">
+                <div class="about-bg hello-text">SKILLS</div>
+                <div class="about-title hello-text">Skills</div>
+            </div>
+            <h1 class="d-flex align-items-center justify-content-center hello-text" style="font-size: 15px">I CONSTANTLY TRY TO IMPROVE </h1>
+
+            <div class="skills-container">
+
+                <a href="https://learn.microsoft.com/en-us/dotnet/csharp/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/256px-Logo_C_sharp.svg.png" alt="C#">
+                        <span>C#</span>
+                    </div>
+                </a>
+
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/512px-HTML5_logo_and_wordmark.svg.png" alt="HTML">
+                        <span>HTML</span>
+                    </div>
+                </a>
+
+                <a href="https://redis.io/docs/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/redis-logo-svgrepo-com.svg" alt="Redis">
+                        <span>Redis Cache</span>
+                    </div>
+                </a>
+
+                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/512px-Unofficial_JavaScript_logo_2.svg.png" alt="JavaScript">
+                        <span>JavaScript</span>
+                    </div>
+                </a>
+
+                <a href="https://getbootstrap.com/docs/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/512px-Bootstrap_logo.svg.png" alt="Bootstrap">
+                        <span>Bootstrap</span>
+                    </div>
+                </a>
+
+                <a href="https://azure.microsoft.com/en-us/products/devops"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/10261-icon-service-Azure-DevOps.svg" alt="Azure">
+                        <span>Azure</span>
+                    </div>
+                </a>
+
+                <a href="https://github.com/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/Github_pngegg.png" alt="GitHub">
+                        <span>GitHub</span>
+                    </div>
+                </a>
+
+                <a href="https://nifi.apache.org/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/apache_nifi_logo_icon_168614.png" alt="Apache NiFi">
+                        <span>Apache NiFi</span>
+                    </div>
+                </a>
+
+                <a href="https://visualstudio.microsoft.com/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/Visual_Studio_Icon_2022.svg" alt="Visual Studio">
+                        <span>Visual Studio</span>
+                    </div>
+                </a>
+
+                <a href="https://learn.microsoft.com/en-us/dotnet/core/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/512px-.NET_Core_Logo.svg.png" alt=".NET Core">
+                        <span>.NET Core</span>
+                    </div>
+                </a>
+
+                <a href="https://www.postgresql.org/docs/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/512px-Postgresql_elephant.svg.png" alt="PostgreSQL">
+                        <span>PostgreSQL</span>
+                    </div>
+                </a>
+
+                <a href="https://learn.microsoft.com/en-us/sql/sql-server/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/sql-database-generic-svgrepo-com.svg" alt="Microsoft SQL Server">
+                        <span>Microsoft SQL</span>
+                    </div>
+                </a>
+
+                <a href="https://neo4j.com/docs/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/Neo4Jpngwing.com.png" alt="Neo4j">
+                        <span>Neo4j</span>
+                    </div>
+                </a>
+
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/css-3.png" alt="CSS">
+                        <span>CSS</span>
+                    </div>
+                </a>
+
+                <a href="https://www.figma.com/"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/figma-logo_brandlogos.net_6n1pb.png" alt="Figma">
+                        <span>Figma</span>
+                    </div>
+                </a>
+
+                <a href="https://www.microsoft.com/microsoft-365"
+                   target="_blank" rel="noopener noreferrer" class="skill-link">
+                    <div class="skill-pill">
+                        <img src="icons/Office Icon.svg" alt="Microsoft Office">
+                        <span>Microsoft Office</span>
+                    </div>
+                </a>
+
+            </div>
+
         </section>
-    
+
         <section id="education">
             <!-- Education content -->
         </section>
-    
+
         <section id="contact">
             <!-- Contact content -->
         </section>
-</div>
+    </div>
 
 

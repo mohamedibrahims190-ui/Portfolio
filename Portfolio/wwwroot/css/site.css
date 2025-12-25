@@ -152,9 +152,8 @@ body {
 
 /* Text next to dot */
 .available-text {
-    color: #28ff9a;
     font-weight: 600;
-    animation: softPulse 2s ease-in-out infinite;
+    font-size: 20px;
 }
 
 @keyframes softPulse {
@@ -202,6 +201,34 @@ body {
             transform: translateY(4px);
         }
 
+.resume-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+    .resume-btn i {
+        font-size: 1.2rem;
+    }
+
+    .resume-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .resume-btn:active {
+        transform: translateY(0);
+    }
+
+    .resume-btn:focus-visible {
+        outline: 2px solid #5b9cff;
+        outline-offset: 3px;
+    }
 
 /* Optional: spacing */
 .resume-section {
@@ -550,4 +577,83 @@ section {
     .project-links a:hover {
         background-color: #00b38a;
     }
+
+#skills {
+    margin-top: 0;
+    padding-top: 0;
+}
+#projects{
+    margin-top: 0;
+    padding: 0;
+}
+#about {
+    margin-top: 0;
+    padding: 0;
+}
+
+.projects-grid {
+    margin-top: 80px;
+}
+
+#skills {
+    padding: 4rem 1rem;
+}
+
+.skills-container {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 70px;
+}
+
+.skill-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    transition: all 0.25s ease;
+    cursor: default;
+}
+
+    .skill-pill img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .skill-pill:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+@media (max-width: 576px) {
+    .skill-pill {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+        .skill-pill img {
+            width: 20px;
+            height: 20px;
+        }
+}
+.skill-link,
+.skill-link:hover,
+.skill-link:focus,
+.skill-link:active {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+
 
