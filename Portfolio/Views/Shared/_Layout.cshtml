@@ -62,9 +62,9 @@
 
             const nameText = "\u00A0Mohamed Ibrahim";
             const titles = [
-                "Software Developer (.NET)",
-                "Backend Developer (.NET)",
-                ".NET Full Stack Developer"
+                ".NET Software Developer",
+                "Backend / API Developer",
+                "Full Stack .NET Developer"
             ];
 
             const nameEl = document.getElementById("name");
@@ -188,6 +188,9 @@
             });
         });
 
+        /* ===============================
+            Sticky nav button active based on scroll
+           =============================== */
             const observer = new IntersectionObserver(
             entries => {
                 entries.forEach(entry => {
