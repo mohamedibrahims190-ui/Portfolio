@@ -52,6 +52,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -203,6 +204,45 @@
             },
             { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
         );
+
+         /* ===============================
+            Email Trigger
+           =============================== */
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Initialize EmailJS
+            emailjs.init("QMhiKCCu56tYVMZ04");
+
+            var form = document.getElementById("contact-form");
+            var timeInput = document.getElementById("time");
+
+            // Exit safely if form does not exist on this page
+            if (!form || !timeInput) {
+                return;
+            }
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                // Set time just before sending
+                timeInput.value = new Date().toLocaleString();
+
+                emailjs.sendForm(
+                    "service_q25lgik",
+                    "template_a8uva2a",
+                    form
+                ).then(
+                    function () {
+                        alert("Message sent successfully");
+                        form.reset();
+                    },
+                    function (error) {
+                        console.error("EmailJS Error:", error);
+                        alert("Failed to send message");
+                    }
+                );
+            });
+        });
 
         sections.forEach(section => observer.observe(section));
 
