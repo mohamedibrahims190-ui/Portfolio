@@ -10,23 +10,36 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
+      # Step 2: Setup MSBuild and .NET tools
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
 
-    - name: Restore NuGet packages
-      run: nuget restore
+      # Step 3: Restore NuGet packages
+      - name: Restore NuGet packages
+        run: nuget restore Portfolio/Portfolio.sln
 
-    - name: Build and Publish project
-      run: msbuild Portfolio/Portfolio.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:PublishDir=$(System.DefaultWorkingDirectory)\publish\
+      # Step 4: Build and Publish project
+      - name: Build and Publish project
+        shell: pwsh
+        run: |
+          $publishDir = "$env:GITHUB_WORKSPACE\publish"
+          Write-Host "Publishing to $publishDir"
+          msbuild Portfolio/Portfolio.csproj `
+            /p:Configuration=Release `
+            /p:DeployOnBuild=true `
+            /p:WebPublishMethod=FileSystem `
+            /p:PublishDir=$publishDir
 
-    - name: Deploy to MonsterASP via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-       server: ${{ secrets.FTP_SERVER }}
-       username: ${{ secrets.FTP_USERNAME }}
-       password: ${{ secrets.FTP_PASSWORD }}
-       local-dir: publish/
-       server-dir: ${{ secrets.FTP_PATH }}
+      # Step 5: Deploy to MonsterASP via FTP
+      - name: Deploy to MonsterASP via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: publish/
+          server-dir: ${{ secrets.FTP_PATH }}
