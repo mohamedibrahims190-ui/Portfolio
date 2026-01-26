@@ -20,13 +20,13 @@ jobs:
       run: nuget restore
 
     - name: Build and Publish project
-      run: msbuild Portfolio/Portfolio.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:PublishDir=publish\
+      run: msbuild Portfolio/Portfolio.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:PublishDir=$(System.DefaultWorkingDirectory)\publish\
 
     - name: Deploy to MonsterASP via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: publish/
-        server-dir: ${{ secrets.FTP_PATH }}
+       server: ${{ secrets.FTP_SERVER }}
+       username: ${{ secrets.FTP_USERNAME }}
+       password: ${{ secrets.FTP_PASSWORD }}
+       local-dir: publish/
+       server-dir: ${{ secrets.FTP_PATH }}
