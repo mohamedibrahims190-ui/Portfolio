@@ -1,0 +1,39 @@
+name: CI-CD-MVC-MonsterASP
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore NuGet packages
+      run: nuget restore
+
+    - name: Build project
+      run: msbuild *.csproj /p:Configuration=Release
+
+    - name: Publish project
+      run: |
+        msbuild *.csproj ^
+        /p:DeployOnBuild=true ^
+        /p:WebPublishMethod=FileSystem ^
+        /p:PublishDir=publish\
+
+    - name: Deploy to MonsterASP via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: publish/
+        server-dir: ${{ secrets.FTP_PATH }}
