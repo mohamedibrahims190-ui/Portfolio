@@ -20,7 +20,7 @@ jobs:
       run: nuget restore
 
     - name: Build project
-      run: msbuild *.csproj /p:Configuration=Release
+      run: msbuild Portfolio/Portfolio.csproj
 
     - name: Publish project
       run: |
