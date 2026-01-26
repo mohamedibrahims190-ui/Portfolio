@@ -16,19 +16,19 @@ jobs:
       # Setup MSBuild
       - uses: microsoft/setup-msbuild@v2
 
-      # Restore NuGet packages
-      - run: nuget restore Portfolio/Portfolio.slnx
+      # Restore NuGet packages using msbuild
+      - run: msbuild Portfolio/Portfolio.csproj /t:Restore
 
-      # Build and publish project
+# Build and publish
       - shell: pwsh
         run: |
-          $publishDir = "$env:GITHUB_WORKSPACE\publish"
-          Write-Host "Publishing to $publishDir"
-          msbuild Portfolio/Portfolio.csproj `
-            /p:Configuration=Release `
-            /p:DeployOnBuild=true `
-            /p:WebPublishMethod=FileSystem `
-            /p:PublishDir=$publishDir
+         $publishDir = "$env:GITHUB_WORKSPACE\publish"
+         Write-Host "Publishing to $publishDir"
+         msbuild Portfolio/Portfolio.csproj `
+         /p:Configuration=Release `
+         /p:DeployOnBuild=true `
+         /p:WebPublishMethod=FileSystem `
+         /p:PublishDir=$publishDir
 
       # Deploy via FTP
       - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
