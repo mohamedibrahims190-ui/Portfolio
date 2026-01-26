@@ -21,13 +21,16 @@ jobs:
 
     - name: Build project
       run: msbuild Portfolio/Portfolio.csproj /p:Configuration=Release
+      
+    - name: Build project
+      run: msbuild Portfolio/Portfolio.csproj /p:Configuration=Release
 
     - name: Publish project
       run: |
-        msbuild *.csproj ^
-        /p:DeployOnBuild=true ^
-        /p:WebPublishMethod=FileSystem ^
-        /p:PublishDir=publish\
+            msbuild Portfolio/Portfolio.csproj ^
+            /p:DeployOnBuild=true ^
+            /p:WebPublishMethod=FileSystem ^
+            /p:PublishDir=publish\
 
     - name: Deploy to MonsterASP via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
