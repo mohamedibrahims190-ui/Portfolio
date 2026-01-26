@@ -10,49 +10,28 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # Step 1: Checkout the repo
+      # Checkout the code
       - uses: actions/checkout@v4
 
-      # Step 2: List files to detect solution location
-      - name: List repo files
-        shell: pwsh
-        run: |
-          Write-Host "Listing all files in repository:"
-          Get-ChildItem -Recurse | Where-Object { $_.Extension -eq ".sln" } | ForEach-Object { Write-Host $_.FullName }
-
-      # Step 3: Setup MSBuild
+      # Setup MSBuild
       - uses: microsoft/setup-msbuild@v2
 
-      # Step 4: Find the solution file automatically
-      - name: Set solution path
-        id: solution
-        shell: pwsh
-        run: |
-          $sln = Get-ChildItem -Recurse -Filter "*.sln" | Select-Object -First 1
-          if (-not $sln) { throw "No .sln file found in repo." }
-          Write-Host "Found solution file: $($sln.FullName)"
-          echo "slnPath=$($sln.FullName)" >> $env:GITHUB_ENV
+      # Restore NuGet packages
+      - run: nuget restore Portfolio/Portfolio.slnx
 
-      # Step 5: Restore NuGet packages
-      - name: Restore NuGet packages
-        run: nuget restore $env:slnPath
-        shell: pwsh
-
-      # Step 6: Build and publish project
-      - name: Build and Publish project
-        shell: pwsh
+      # Build and publish project
+      - shell: pwsh
         run: |
           $publishDir = "$env:GITHUB_WORKSPACE\publish"
           Write-Host "Publishing to $publishDir"
-          msbuild $env:slnPath `
+          msbuild Portfolio/Portfolio.csproj `
             /p:Configuration=Release `
             /p:DeployOnBuild=true `
             /p:WebPublishMethod=FileSystem `
             /p:PublishDir=$publishDir
 
-      # Step 7: Deploy via FTP
-      - name: Deploy to MonsterASP via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      # Deploy via FTP
+      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
