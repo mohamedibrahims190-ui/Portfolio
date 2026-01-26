@@ -19,18 +19,8 @@ jobs:
     - name: Restore NuGet packages
       run: nuget restore
 
-    - name: Build project
-      run: msbuild Portfolio/Portfolio.csproj /p:Configuration=Release
-      
-    - name: Build project
-      run: msbuild Portfolio/Portfolio.csproj /p:Configuration=Release
-
-    - name: Publish project
-      run: |
-            msbuild Portfolio/Portfolio.csproj ^
-            /p:DeployOnBuild=true ^
-            /p:WebPublishMethod=FileSystem ^
-            /p:PublishDir=publish\
+    - name: Build and Publish project
+      run: msbuild Portfolio/Portfolio.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:PublishDir=publish\
 
     - name: Deploy to MonsterASP via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
