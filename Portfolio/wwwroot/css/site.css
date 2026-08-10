@@ -472,31 +472,25 @@ section {
     flex-wrap: wrap;
 }
 
-/* Card */
 .project-card {
     width: 300px;
-    height: 400px; /* fixed height */
+    min-height: 400px;
+    height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* ensures bottom content stays visible */
     background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
     backdrop-filter: blur(12px);
     border-radius: 16px;
     border: 1px solid rgba(255,255,255,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
-    overflow: hidden; /* still keeps rounded corners */
+    overflow: hidden;
 }
 
-    .project-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-    }
-
-/* Image */
 .project-image-wrapper {
     width: 100%;
-    height: 180px;
+    height: 140px;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .project-image {
@@ -507,13 +501,11 @@ section {
     display: block;
 }
 
-/* Content */
 .project-content {
     padding: 1rem 1.2rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* pushes button to the bottom */
-    flex-grow: 1; /* fills available space */
+    flex-grow: 1;
 }
 
     .project-content h3 {
@@ -526,6 +518,7 @@ section {
         font-size: 0.95rem;
         color: #ccc;
         margin-bottom: 1rem;
+        line-height: 1.5;
     }
 
     .project-content .tech-stack {
@@ -533,22 +526,13 @@ section {
         font-weight: 500;
         color: #00d1b2;
         margin-bottom: 1rem;
+        line-height: 1.5;
+        display: block;
     }
 
-.project-links a {
-    text-decoration: none;
-    color: #fff;
-    background-color: #00d1b2;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    text-align: center;
-    transition: background 0.3s;
+.project-links {
+    margin-top: auto;
 }
-
-    .project-links a:hover {
-        background-color: #00b38a;
-    }
 
 #skills {
     margin-top: 0;
@@ -749,7 +733,7 @@ section {
 
 .vertical-divider {
     width: 2px; /* Thickness of the line */
-    height: 150px; /* Line height */
+    height: 100px; /* Line height */
     background-color: #ffffff;
     border: none;
     margin: 0;
