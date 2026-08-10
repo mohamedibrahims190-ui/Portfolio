@@ -46,7 +46,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - Portfolio - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - Portfolio - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -192,18 +192,31 @@
         /* ===============================
             Sticky nav button active based on scroll
            =============================== */
-            const observer = new IntersectionObserver(
-            entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        navButtons.forEach(btn => btn.classList.remove("active"));
-                        const activeBtn = document.querySelector(`.nav-btn[href="#${entry.target.id}"]`);
-                        if (activeBtn) activeBtn.classList.add("active");
-                    }
+        const observer = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                navButtons.forEach(btn => {
+                    btn.classList.remove("active");
                 });
-            },
-            { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
-        );
+
+                const activeBtn = document.querySelector(
+                    `.nav-btn[href="#${entry.target.id}"]`
+                );
+
+                if (activeBtn) {
+                    activeBtn.classList.add("active");
+                }
+            }
+        });
+    },
+    {
+        rootMargin: "-30% 0px -60% 0px",
+        threshold: 0
+    }
+);
 
          /* ===============================
             Email Trigger
