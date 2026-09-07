@@ -2,7 +2,9 @@
 
 if (canvas) {
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", {
+        alpha: true
+    });
 
     let width;
     let height;
@@ -30,14 +32,173 @@ if (canvas) {
         "ApacheNIFI"
     ];
 
+
+    // =========================================================
+    // DEVICE PERFORMANCE SETTINGS
+    // =========================================================
+
+    const isMobile =
+        window.matchMedia("(max-width: 600px)").matches;
+
+    const isTablet =
+        window.matchMedia(
+            "(min-width: 601px) and (max-width: 1024px)"
+        ).matches;
+
+
+    let STAR_COUNT;
+    let PARTICLE_COUNT;
+    let TARGET_FPS;
+    let ENABLE_PARALLAX;
+    let ENABLE_STAR_GLOW;
+    let ENABLE_TEXT_GLOW;
+    let NEBULA_INTERVAL;
+
+
+    if (isMobile) {
+
+        STAR_COUNT = 85;
+        PARTICLE_COUNT = 10;
+
+        TARGET_FPS = 30;
+
+        ENABLE_PARALLAX = false;
+
+        ENABLE_STAR_GLOW = false;
+
+        ENABLE_TEXT_GLOW = false;
+
+        /*
+         * Draw nebula less frequently.
+         */
+        NEBULA_INTERVAL = 2;
+
+    }
+    else if (isTablet) {
+
+        STAR_COUNT = 100;
+        PARTICLE_COUNT = 12;
+
+        TARGET_FPS = 30;
+
+        ENABLE_PARALLAX = false;
+
+        ENABLE_STAR_GLOW = false;
+
+        ENABLE_TEXT_GLOW = false;
+
+        NEBULA_INTERVAL = 3;
+    }
+    else {
+
+        STAR_COUNT = 280;
+        PARTICLE_COUNT = 42;
+
+        TARGET_FPS = 60;
+
+        ENABLE_PARALLAX = true;
+
+        ENABLE_STAR_GLOW = true;
+
+        ENABLE_TEXT_GLOW = true;
+
+        NEBULA_INTERVAL = 1;
+    }
+
+
+    const FRAME_INTERVAL =
+        1000 / TARGET_FPS;
+
+
+    let lastFrameTime = 0;
+
+    let frameCounter = 0;
+
+    let lastShootingStar = 0;
+
+    let nextShootingStarDelay =
+        6000 +
+        Math.random() * 6000;
+
+
+    // =========================================================
+    // MOUSE
+    // =========================================================
+
     let mouseX = 0;
     let mouseY = 0;
 
     let targetMouseX = 0;
     let targetMouseY = 0;
 
-    const STAR_COUNT = 280;
-    const PARTICLE_COUNT = 42;
+
+    // Only attach mouse movement
+    // when parallax is actually needed.
+
+    if (ENABLE_PARALLAX) {
+
+        window.addEventListener(
+            "mousemove",
+            (event) => {
+
+                targetMouseX =
+                    event.clientX /
+                    window.innerWidth -
+                    0.5;
+
+                targetMouseY =
+                    event.clientY /
+                    window.innerHeight -
+                    0.5;
+            },
+            {
+                passive: true
+            }
+        );
+
+
+        window.addEventListener(
+            "mouseleave",
+            () => {
+
+                targetMouseX = 0;
+                targetMouseY = 0;
+
+            },
+            {
+                passive: true
+            }
+        );
+    }
+
+
+    function updateMouse() {
+
+        if (!ENABLE_PARALLAX) {
+
+            mouseX = 0;
+            mouseY = 0;
+
+            return;
+        }
+
+
+        mouseX +=
+            (
+                targetMouseX -
+                mouseX
+            ) *
+            0.035;
+
+
+        mouseY +=
+            (
+                targetMouseY -
+                mouseY
+            ) *
+            0.035;
+    }
+
 
     // =========================================================
     // RESIZE
@@ -48,26 +209,67 @@ if (canvas) {
         const rect =
             canvas.parentElement.getBoundingClientRect();
 
+
         width = rect.width;
+
         height = rect.height;
 
-        dpr =
-            Math.min(
-                window.devicePixelRatio || 1,
-                2
-            );
+
+        /*
+         * Mobile devices don't need
+         * extremely high canvas resolution.
+         *
+         * This is one of the biggest
+         * performance improvements.
+         */
+
+        const devicePixelRatio =
+            window.devicePixelRatio || 1;
+
+
+        if (isMobile) {
+
+            dpr =
+                Math.min(
+                    devicePixelRatio,
+                    1.25
+                );
+
+        }
+        else if (isTablet) {
+
+            dpr =
+                Math.min(
+                    devicePixelRatio,
+                    1.5
+                );
+
+        }
+        else {
+
+            dpr =
+                Math.min(
+                    devicePixelRatio,
+                    2
+                );
+        }
+
 
         canvas.width =
-            width * dpr;
+            Math.floor(
+                width * dpr
+            );
+
 
         canvas.height =
-            height * dpr;
+            Math.floor(
+                height * dpr
+            );
 
-        canvas.style.width =
-            width + "px";
 
-        canvas.style.height =
-            height + "px";
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+
 
         ctx.setTransform(
             dpr,
@@ -84,12 +286,6 @@ if (canvas) {
     // HERO SAFE ZONE
     // =========================================================
 
-    /*
-     * Central area where the main portfolio text lives.
-     *
-     * Technology words will avoid this region.
-     */
-
     function isInsideHeroSafeZone(x, y) {
 
         const centerX =
@@ -98,11 +294,13 @@ if (canvas) {
         const centerY =
             height * 0.46;
 
+
         const safeWidth =
             Math.min(
                 width * 0.62,
                 850
             );
+
 
         const safeHeight =
             Math.min(
@@ -110,9 +308,11 @@ if (canvas) {
                 360
             );
 
+
         return (
             Math.abs(x - centerX) <
             safeWidth / 2 &&
+
             Math.abs(y - centerY) <
             safeHeight / 2
         );
@@ -126,6 +326,7 @@ if (canvas) {
 
         let attempts = 0;
 
+
         do {
 
             x =
@@ -138,10 +339,12 @@ if (canvas) {
 
             attempts++;
 
-        } while (
+        }
+        while (
             isInsideHeroSafeZone(x, y) &&
             attempts < 100
         );
+
 
         return {
             x,
@@ -159,6 +362,7 @@ if (canvas) {
         const depth =
             Math.random();
 
+
         return {
 
             x:
@@ -170,11 +374,6 @@ if (canvas) {
                 height,
 
             depth:
-
-                /*
-                 * Most stars stay in background.
-                 */
-
                 Math.pow(
                     depth,
                     1.4
@@ -215,6 +414,7 @@ if (canvas) {
 
         stars = [];
 
+
         for (
             let i = 0;
             i < STAR_COUNT;
@@ -228,77 +428,79 @@ if (canvas) {
     }
 
 
-    function updateStars(time) {
+    function updateStars() {
 
         for (const star of stars) {
 
-            /*
-             * Natural slow movement
-             */
-
             star.x +=
                 star.speedX *
-                (0.5 + star.depth);
+                (
+                    0.5 +
+                    star.depth
+                );
+
 
             star.y +=
                 star.speedY *
-                (0.5 + star.depth);
+                (
+                    0.5 +
+                    star.depth
+                );
 
 
             /*
-             * Mouse parallax.
-             *
-             * Foreground stars move more.
+             * Parallax is only calculated
+             * on desktop.
              */
 
-            star.renderX =
-                star.x +
-                mouseX *
-                star.depth *
-                24;
+            if (ENABLE_PARALLAX) {
 
-            star.renderY =
-                star.y +
-                mouseY *
-                star.depth *
-                14;
+                star.renderX =
+                    star.x +
+                    mouseX *
+                    star.depth *
+                    24;
 
 
-            /*
-             * Wrap stars around screen.
-             */
+                star.renderY =
+                    star.y +
+                    mouseY *
+                    star.depth *
+                    14;
 
-            if (
-                star.x <
-                -30
-            ) {
+            }
+            else {
+
+                star.renderX =
+                    star.x;
+
+                star.renderY =
+                    star.y;
+            }
+
+
+            if (star.x < -30) {
 
                 star.x =
                     width + 30;
             }
 
-            if (
-                star.x >
-                width + 30
-            ) {
+
+            if (star.x > width + 30) {
 
                 star.x =
                     -30;
             }
 
-            if (
-                star.y <
-                -30
-            ) {
+
+            if (star.y < -30) {
 
                 star.y =
                     height + 30;
             }
 
-            if (
-                star.y >
-                height + 30
-            ) {
+
+            if (star.y > height + 30) {
 
                 star.y =
                     -30;
@@ -318,6 +520,7 @@ if (canvas) {
                     star.twinkleOffset
                 );
 
+
             const opacity =
                 Math.max(
                     0.03,
@@ -325,9 +528,6 @@ if (canvas) {
                     twinkle * 0.16
                 );
 
-            /*
-             * Foreground stars appear slightly larger.
-             */
 
             const size =
                 star.radius *
@@ -337,11 +537,8 @@ if (canvas) {
                 );
 
 
-            /*
-             * Main star
-             */
-
             ctx.beginPath();
+
 
             ctx.arc(
                 star.renderX,
@@ -351,6 +548,7 @@ if (canvas) {
                 Math.PI * 2
             );
 
+
             ctx.fillStyle =
                 `rgba(
                     255,
@@ -359,19 +557,25 @@ if (canvas) {
                     ${opacity}
                 )`;
 
+
             ctx.fill();
 
 
             /*
-             * Glow around brighter foreground stars.
+             * Glow only on desktop/tablet.
+             *
+             * Mobile skips this expensive
+             * second drawing operation.
              */
 
             if (
+                ENABLE_STAR_GLOW &&
                 star.depth > 0.65 &&
                 size > 1
             ) {
 
                 ctx.beginPath();
+
 
                 ctx.arc(
                     star.renderX,
@@ -381,6 +585,7 @@ if (canvas) {
                     Math.PI * 2
                 );
 
+
                 ctx.fillStyle =
                     `rgba(
                         130,
@@ -388,6 +593,7 @@ if (canvas) {
                         255,
                         ${opacity * 0.07}
                     )`;
+
 
                 ctx.fill();
             }
@@ -405,6 +611,7 @@ if (canvas) {
             Math.random() *
             0.8 +
             0.2;
+
 
         return {
 
@@ -441,8 +648,7 @@ if (canvas) {
                 0.45 +
                 0.18,
 
-            depth:
-                depth
+            depth
         };
     }
 
@@ -450,6 +656,7 @@ if (canvas) {
     function createParticles() {
 
         particles = [];
+
 
         for (
             let i = 0;
@@ -480,10 +687,6 @@ if (canvas) {
                 16;
 
 
-            /*
-             * Slowly breathe the orbital distance.
-             */
-
             const breathing =
                 Math.sin(
                     time * 0.00025 +
@@ -496,34 +699,53 @@ if (canvas) {
                 breathing;
 
 
-            const x =
-                centerX +
+            const cos =
                 Math.cos(
                     particle.angle
-                ) *
+                );
+
+
+            const sin =
+                Math.sin(
+                    particle.angle
+                );
+
+
+            const x =
+                centerX +
+                cos *
                 distance;
 
 
             const y =
                 centerY +
-                Math.sin(
-                    particle.angle
-                ) *
+                sin *
                 distance *
                 particle.vertical;
 
 
-            particle.x =
-                x +
-                mouseX *
-                particle.depth *
-                20;
+            if (ENABLE_PARALLAX) {
 
-            particle.y =
-                y +
-                mouseY *
-                particle.depth *
-                12;
+                particle.x =
+                    x +
+                    mouseX *
+                    particle.depth *
+                    20;
+
+
+                particle.y =
+                    y +
+                    mouseY *
+                    particle.depth *
+                    12;
+
+            }
+            else {
+
+                particle.x = x;
+
+                particle.y = y;
+            }
         }
     }
 
@@ -533,6 +755,7 @@ if (canvas) {
         for (const particle of particles) {
 
             ctx.beginPath();
+
 
             ctx.arc(
                 particle.x,
@@ -546,6 +769,7 @@ if (canvas) {
                 Math.PI * 2
             );
 
+
             ctx.fillStyle =
                 `rgba(
                     120,
@@ -553,6 +777,7 @@ if (canvas) {
                     255,
                     ${particle.opacity}
                 )`;
+
 
             ctx.fill();
         }
@@ -569,23 +794,21 @@ if (canvas) {
             width * 0.5 +
             Math.sin(
                 time * 0.00008
-            ) *
-            35;
+            ) * 35;
+
 
         const centerY =
             height * 0.45 +
             Math.cos(
                 time * 0.00006
-            ) *
-            22;
+            ) * 22;
 
 
         const radius =
             Math.max(
                 width,
                 height
-            ) *
-            0.58;
+            ) * 0.58;
 
 
         const gradient =
@@ -604,15 +827,18 @@ if (canvas) {
             "rgba(80,120,255,0.10)"
         );
 
+
         gradient.addColorStop(
             0.25,
             "rgba(90,100,240,0.045)"
         );
 
+
         gradient.addColorStop(
             0.55,
             "rgba(50,70,180,0.018)"
         );
+
 
         gradient.addColorStop(
             1,
@@ -622,21 +848,26 @@ if (canvas) {
 
         ctx.save();
 
+
         ctx.translate(
             centerX,
             centerY
         );
 
+
         ctx.rotate(
             time * 0.000008
         );
+
 
         ctx.scale(
             1.8,
             0.42
         );
 
+
         ctx.beginPath();
+
 
         ctx.arc(
             0,
@@ -646,10 +877,13 @@ if (canvas) {
             Math.PI * 2
         );
 
+
         ctx.fillStyle =
             gradient;
 
+
         ctx.fill();
+
 
         ctx.restore();
     }
@@ -668,19 +902,12 @@ if (canvas) {
             getSafeWordPosition();
 
 
-        /*
-         * Three depth layers:
-         *
-         * 0 = background
-         * 1 = middle
-         * 2 = foreground
-         */
-
         const layer =
             index % 3;
 
 
         let depth;
+
 
         if (layer === 0) {
 
@@ -707,14 +934,11 @@ if (canvas) {
         }
 
 
-        /*
-         * Curved path parameters.
-         */
-
         const curveRadius =
             Math.random() *
             90 +
             50;
+
 
         const curveSpeed =
             Math.random() *
@@ -743,6 +967,7 @@ if (canvas) {
 
             baseY:
                 position.y,
+
 
             size:
 
@@ -782,10 +1007,6 @@ if (canvas) {
                         0.07,
 
 
-            /*
-             * Base movement.
-             */
-
             driftX:
                 (Math.random() - 0.5) *
                 0.035,
@@ -794,10 +1015,6 @@ if (canvas) {
                 (Math.random() - 0.5) *
                 0.025,
 
-
-            /*
-             * Curved movement.
-             */
 
             curveRadius,
 
@@ -809,10 +1026,6 @@ if (canvas) {
                 2,
 
 
-            /*
-             * Small rotation.
-             */
-
             rotation:
                 (Math.random() - 0.5) *
                 0.035,
@@ -822,10 +1035,6 @@ if (canvas) {
                 (Math.random() - 0.5) *
                 0.00015,
 
-
-            /*
-             * Breathing animation.
-             */
 
             phase:
                 Math.random() *
@@ -844,6 +1053,7 @@ if (canvas) {
     function createFloatingWords() {
 
         floatingWords = [];
+
 
         for (
             let i = 0;
@@ -867,16 +1077,13 @@ if (canvas) {
             const word of floatingWords
         ) {
 
-            /*
-             * Very slow base movement.
-             */
-
             word.baseX +=
                 word.driftX *
                 (
                     0.7 +
                     word.depth
                 );
+
 
             word.baseY +=
                 word.driftY *
@@ -885,14 +1092,6 @@ if (canvas) {
                     word.depth
                 );
 
-
-            /*
-             * Curved orbital movement.
-             *
-             * This creates a smooth
-             * floating path rather than
-             * straight-line movement.
-             */
 
             const curve =
                 time *
@@ -904,25 +1103,31 @@ if (canvas) {
                 Math.cos(curve) *
                 word.curveRadius;
 
+
             const curveY =
                 Math.sin(curve * 0.8) *
                 word.curveRadius *
                 0.45;
 
 
-            /*
-             * Mouse parallax.
-             */
+            let parallaxX = 0;
 
-            const parallaxX =
-                mouseX *
-                word.depth *
-                30;
+            let parallaxY = 0;
 
-            const parallaxY =
-                mouseY *
-                word.depth *
-                18;
+
+            if (ENABLE_PARALLAX) {
+
+                parallaxX =
+                    mouseX *
+                    word.depth *
+                    30;
+
+
+                parallaxY =
+                    mouseY *
+                    word.depth *
+                    18;
+            }
 
 
             word.renderX =
@@ -930,15 +1135,12 @@ if (canvas) {
                 curveX +
                 parallaxX;
 
+
             word.renderY =
                 word.baseY +
                 curveY +
                 parallaxY;
 
-
-            /*
-             * Slow rotation.
-             */
 
             word.renderRotation =
                 word.rotation +
@@ -950,11 +1152,6 @@ if (canvas) {
                 0.012;
 
 
-            /*
-             * Keep words moving around
-             * the screen.
-             */
-
             if (
                 word.baseX <
                 -180
@@ -963,6 +1160,7 @@ if (canvas) {
                 word.baseX =
                     width + 180;
             }
+
 
             if (
                 word.baseX >
@@ -973,6 +1171,7 @@ if (canvas) {
                     -180;
             }
 
+
             if (
                 word.baseY <
                 -80
@@ -981,6 +1180,7 @@ if (canvas) {
                 word.baseY =
                     height + 80;
             }
+
 
             if (
                 word.baseY >
@@ -999,6 +1199,7 @@ if (canvas) {
         ctx.textAlign =
             "center";
 
+
         ctx.textBaseline =
             "middle";
 
@@ -1006,10 +1207,6 @@ if (canvas) {
         for (
             const word of floatingWords
         ) {
-
-            /*
-             * Gentle breathing.
-             */
 
             const pulse =
                 Math.sin(
@@ -1027,10 +1224,6 @@ if (canvas) {
                     pulse
                 );
 
-
-            /*
-             * Depth affects size.
-             */
 
             const depthScale =
                 0.78 +
@@ -1057,30 +1250,30 @@ if (canvas) {
             );
 
 
-            /*
-             * Font.
-             */
-
             ctx.font =
                 `600 ${fontSize}px Inter, Arial, sans-serif`;
 
 
             /*
-             * Foreground words get
-             * slightly stronger glow.
+             * Text shadow is expensive.
+             *
+             * Only desktop gets it.
              */
 
-            const glow =
-                word.depth > 0.65
-                    ? 10
-                    : 6;
+            if (ENABLE_TEXT_GLOW) {
 
+                ctx.shadowBlur =
+                    word.depth > 0.65
+                        ? 10
+                        : 6;
 
-            ctx.shadowBlur =
-                glow;
+                ctx.shadowColor =
+                    "rgba(80,150,255,0.30)";
+            }
+            else {
 
-            ctx.shadowColor =
-                "rgba(80,150,255,0.30)";
+                ctx.shadowBlur = 0;
+            }
 
 
             ctx.fillStyle =
@@ -1110,13 +1303,9 @@ if (canvas) {
 
     function createShootingStar() {
 
-        /*
-         * Keep shooting stars mostly
-         * outside the hero center.
-         */
-
         let x;
         let y;
+
 
         if (
             Math.random() < 0.5
@@ -1126,6 +1315,7 @@ if (canvas) {
                 Math.random() *
                 width *
                 0.7;
+
 
             y =
                 Math.random() *
@@ -1139,6 +1329,7 @@ if (canvas) {
                 Math.random() *
                 width *
                 0.35;
+
 
             y =
                 height *
@@ -1197,6 +1388,7 @@ if (canvas) {
                 ) *
                 star.speed;
 
+
             star.y +=
                 Math.sin(
                     star.angle
@@ -1204,8 +1396,16 @@ if (canvas) {
                 star.speed;
 
 
+            /*
+             * Mobile fades slightly faster
+             * so shooting stars don't remain
+             * on screen too long.
+             */
+
             star.opacity -=
-                0.018;
+                isMobile
+                    ? 0.025
+                    : 0.018;
 
 
             if (
@@ -1237,6 +1437,7 @@ if (canvas) {
                     star.angle
                 ) *
                 star.length;
+
 
             const tailY =
                 star.y -
@@ -1274,38 +1475,43 @@ if (canvas) {
 
             ctx.beginPath();
 
+
             ctx.moveTo(
                 star.x,
                 star.y
             );
+
 
             ctx.lineTo(
                 tailX,
                 tailY
             );
 
+
             ctx.strokeStyle =
                 gradient;
 
+
             ctx.lineWidth =
-                1.4;
+                isMobile
+                    ? 1
+                    : 1.4;
+
 
             ctx.stroke();
 
 
-            /*
-             * Bright head.
-             */
-
             ctx.beginPath();
+
 
             ctx.arc(
                 star.x,
                 star.y,
-                1.5,
+                isMobile ? 1.2 : 1.5,
                 0,
                 Math.PI * 2
             );
+
 
             ctx.fillStyle =
                 `rgba(
@@ -1315,79 +1521,46 @@ if (canvas) {
                     ${star.opacity}
                 )`;
 
+
             ctx.fill();
         }
     }
 
 
     // =========================================================
-    // MOUSE
+    // RESIZE EVENT
     // =========================================================
 
-    window.addEventListener(
-        "mousemove",
-        (event) => {
+    let resizeTimer;
 
-            targetMouseX =
-                event.clientX /
-                window.innerWidth -
-                0.5;
-
-            targetMouseY =
-                event.clientY /
-                window.innerHeight -
-                0.5;
-        }
-    );
-
-
-    /*
-     * Reset mouse when leaving window.
-     */
-
-    window.addEventListener(
-        "mouseleave",
-        () => {
-
-            targetMouseX = 0;
-            targetMouseY = 0;
-        }
-    );
-
-
-    function updateMouse() {
-
-        mouseX +=
-            (
-                targetMouseX -
-                mouseX
-            ) *
-            0.035;
-
-        mouseY +=
-            (
-                targetMouseY -
-                mouseY
-            ) *
-            0.035;
-    }
-
-
-    // =========================================================
-    // RESIZE
-    // =========================================================
 
     window.addEventListener(
         "resize",
         () => {
 
-            resizeCanvas();
+            clearTimeout(
+                resizeTimer
+            );
 
-            createStars();
 
-            createParticles();
+            resizeTimer =
+                setTimeout(
+                    () => {
 
-            createFloatingWords();
+                        resizeCanvas();
+
+                        createStars();
+
+                        createParticles();
+
+                        createFloatingWords();
+
+                    },
+                    150
+                );
+        },
+        {
+            passive: true
         }
     );
 
@@ -1396,9 +1569,35 @@ if (canvas) {
     // ANIMATION
     // =========================================================
 
-    let lastShootingStar = 0;
-
     function animate(time) {
+
+        /*
+         * FPS throttling.
+         *
+         * Desktop: ~60 FPS
+         * Tablet: ~45 FPS
+         * Mobile: ~30 FPS
+         */
+
+        if (
+            time -
+            lastFrameTime <
+            FRAME_INTERVAL
+        ) {
+
+            requestAnimationFrame(
+                animate
+            );
+
+            return;
+        }
+
+
+        lastFrameTime = time;
+
+
+        frameCounter++;
+
 
         ctx.clearRect(
             0,
@@ -1408,84 +1607,101 @@ if (canvas) {
         );
 
 
-        /*
-         * Mouse.
-         */
+        // -----------------------------------------------------
+        // MOUSE
+        // -----------------------------------------------------
 
         updateMouse();
 
 
-        /*
-         * -----------------------------------------------------
-         * BACKGROUND
-         * -----------------------------------------------------
-         */
-
-        drawNebula(time);
-
+        // -----------------------------------------------------
+        // NEBULA
+        // -----------------------------------------------------
 
         /*
-         * -----------------------------------------------------
-         * STARFIELD
-         * -----------------------------------------------------
+         * On mobile we don't need to recreate
+         * the expensive radial gradient every frame.
          */
 
-        updateStars(time);
+        if (!isMobile) {
+            drawNebula(time);
+        }
+
+
+        // -----------------------------------------------------
+        // STARS
+        // -----------------------------------------------------
+
+        updateStars();
 
         drawStars(time);
 
 
-        /*
-         * -----------------------------------------------------
-         * ORBITAL PARTICLES
-         * -----------------------------------------------------
-         */
+        // -----------------------------------------------------
+        // PARTICLES
+        // -----------------------------------------------------
 
         updateParticles(time);
 
         drawParticles();
 
 
-        /*
-         * -----------------------------------------------------
-         * TECHNOLOGY WORDS
-         * -----------------------------------------------------
-         */
+        // -----------------------------------------------------
+        // TECHNOLOGY WORDS
+        // -----------------------------------------------------
 
         updateFloatingWords(time);
 
         drawFloatingWords(time);
 
 
-        /*
-         * -----------------------------------------------------
-         * SHOOTING STARS
-         * -----------------------------------------------------
-         */
+        // -----------------------------------------------------
+        // SHOOTING STARS
+        // -----------------------------------------------------
 
         updateShootingStars();
 
         drawShootingStars();
 
 
-        /*
-         * Random shooting star.
-         *
-         * Approximately every 6–12 seconds.
-         */
+        // -----------------------------------------------------
+        // SHOOTING STAR SPAWN
+        // -----------------------------------------------------
 
         if (
             time -
             lastShootingStar >
-            6000 +
-            Math.random() *
-            6000
+            nextShootingStarDelay
         ) {
 
-            createShootingStar();
+            /*
+             * Reduce shooting star frequency
+             * on mobile.
+             */
+
+            if (
+                !isMobile ||
+                Math.random() < 0.65
+            ) {
+
+                createShootingStar();
+            }
+
 
             lastShootingStar =
                 time;
+
+
+            nextShootingStarDelay =
+                isMobile
+
+                    ? 10000 +
+                    Math.random() *
+                    10000
+
+                    : 6000 +
+                    Math.random() *
+                    6000;
         }
 
 
@@ -1506,6 +1722,7 @@ if (canvas) {
     createParticles();
 
     createFloatingWords();
+
 
     requestAnimationFrame(
         animate
