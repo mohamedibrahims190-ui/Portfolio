@@ -38,11 +38,14 @@
             </div>
         </nav>
     </header>
+    <canvas id="galaxyCanvas"></canvas>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+    <script src="~/js/galaxy.js"></script>
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -53,7 +56,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
@@ -110,39 +112,64 @@
 
             typeName();
 
-            /* ===============================
-               Connect Card Modal
-            =============================== */
-
-            const connectBtn = document.getElementById("connectBtn");
-            const connectCard = document.getElementById("connectCard");
-            const closeCard = document.getElementById("closeCard");
-            const overlay = document.getElementById("overlay");
-
-            if (connectBtn && connectCard && closeCard && overlay) {
-
-                connectBtn.addEventListener("click", () => {
-                    overlay.style.display = "block";
-                    connectCard.style.display = "block";
-
-                    requestAnimationFrame(() => {
-                        overlay.style.opacity = "1";
-                        connectCard.style.opacity = "1";
-                    });
-                });
-
-                const closeModal = () => {
-                    overlay.style.opacity = "0";
-                    connectCard.style.opacity = "0";
-                    setTimeout(() => {
-                        overlay.style.display = "none";
-                        connectCard.style.display = "none";
-                    }, 300);
-                };
-
-                closeCard.addEventListener("click", closeModal);
-                overlay.addEventListener("click", closeModal);
-            }
+            // ===============================
+             // Connect Card Modal
+             // ===============================
+             
+             const connectBtn = document.getElementById("connectBtn");
+             const connectCard = document.getElementById("connectCard");
+             const closeCard = document.getElementById("closeCard");
+             const overlay = document.getElementById("overlay");
+             
+             if (connectBtn && connectCard && closeCard && overlay) {
+             
+                 const openModal = () => {
+             
+                     connectCard.classList.add("active");
+                     overlay.classList.add("active");
+             
+                     document.body.classList.add("connect-open");
+             
+                     connectBtn.setAttribute("aria-expanded", "true");
+             
+                     setTimeout(() => {
+                         closeCard.focus();
+                     }, 100);
+                 };
+             
+             
+                 const closeModal = () => {
+             
+                     connectCard.classList.remove("active");
+                     overlay.classList.remove("active");
+             
+                     document.body.classList.remove("connect-open");
+             
+                     connectBtn.setAttribute("aria-expanded", "false");
+             
+                     connectBtn.focus();
+                 };
+             
+             
+                 connectBtn.addEventListener("click", openModal);
+             
+                 closeCard.addEventListener("click", closeModal);
+             
+                 overlay.addEventListener("click", closeModal);
+             
+             
+                 document.addEventListener("keydown", (event) => {
+             
+                     if (
+                         event.key === "Escape" &&
+                         connectCard.classList.contains("active")
+                     ) {
+                         closeModal();
+                     }
+             
+                 });
+             
+             }
 
             /* ===============================
                Copy Email
