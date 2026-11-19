@@ -11,6 +11,11 @@ namespace Portfolio.Controllers
             return View();
         }
 
+        public IActionResult Contact()
+        {
+            return RedirectToAction(nameof(Index), "Home", null, "contact");
+        }
+
         public IActionResult Privacy()
         {
             return View();
