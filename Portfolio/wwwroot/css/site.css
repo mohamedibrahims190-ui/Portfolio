@@ -364,8 +364,8 @@ section {
     z-index: 1;
 }
 
-/* Optional: blend effect for merging */
-.about-bg::after {
+/* Blend overlay only on the About watermark. Other sections keep their own label. */
+#about .about-bg::after {
     content: "ABOUT";
     position: absolute;
     top: 0;
